@@ -78,20 +78,32 @@
             </LinearLayout>
         </LinearLayout>
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
             android:background="@color/colorPrimary"
-            app:tabTextColor="@android:color/white"
-            app:tabIndicatorHeight="0dp"
-            android:layout_marginBottom="5dp"
-            android:paddingBottom="10dp"
-            app:tabGravity="fill"/>
+            app:tabTextColor="@android:color/black">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/belum"
+                android:text="Belum" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sudah"
+                android:text="Sudah" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/viewpager">
+
+        </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 </RelativeLayout>

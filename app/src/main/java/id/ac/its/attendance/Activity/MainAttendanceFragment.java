@@ -71,8 +71,8 @@ public class MainAttendanceFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_attendance, container, false);
 
-        agendaSpinner = view.findViewById(R.id.spinnerAgenda);
-        btnGo = view.findViewById(R.id.btn_attendance_go);
+//        agendaSpinner = view.findViewById(R.id.spinnerAgenda);
+//        btnGo = view.findViewById(R.id.btn_attendance_go);
         agendaNama = new ArrayList<>();
         agendaMap = new HashMap<>();
 

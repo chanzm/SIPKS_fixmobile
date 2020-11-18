@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 //        bagian = findViewById(R.id.bagian);
 
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         setupViewPager(viewPager);
 
@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
-        viewPager.setAdapter(adapter);
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
+//        viewPager.setAdapter(adapter);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResponseLoginAttendance> call, Response<ResponseLoginAttendance> response) {
                             pDialog.dismiss();
+//                            inidipake ga ayya
                             if(response.code()==200)
                             {
                                 Constans.setNip(response.body().getData().getNip());

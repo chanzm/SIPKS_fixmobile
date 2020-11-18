@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/App_name1"
+                    android:text="SIPKS"
                     android:id="@+id/tv_title"
                     android:layout_centerInParent="true"
                     android:textStyle="bold"
@@ -65,7 +65,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="NRP"
+                            android:hint="Email"
                             android:id="@+id/login_email"
                             android:layout_marginStart="10dp"
                             android:maxLines="1"

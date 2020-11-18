@@ -29,7 +29,7 @@ public interface ApiClientSIPKS {
     @FormUrlEncoded
     @POST("login")
     Call<ResponseLogin> login(
-        @Field("nip") String nip,
+        @Field("email") String nip,
         @Field("password") String password
     );
 

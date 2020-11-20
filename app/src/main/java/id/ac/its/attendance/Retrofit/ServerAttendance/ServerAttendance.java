@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerAttendance {
     private static Retrofit retrofit = null;
-    public final static String BASE_URL = "http://10.0.2.2:8000/";
+    public final static String BASE_URL = "http://192.168.0.106/sipks/public/api/"; // API laptop server
 //    private final static String API_BASE_URL = BASE_URL+"api/v1/";
 
     public static Retrofit builder() {

@@ -76,7 +76,7 @@ public interface ApiClientAttendance {
                                   @Header("Authorization") String token);
 
     @FormUrlEncoded
-    @POST("/api/login")
+    @POST("login")
     Call<ResponseLoginAttendance> login(@Field("email") String nip,
                                         @Field("password") String password);
 

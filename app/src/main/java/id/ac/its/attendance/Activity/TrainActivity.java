@@ -12,6 +12,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -22,6 +23,7 @@ import retrofit2.Response;
 public class TrainActivity extends AppCompatActivity {
     private Button Train;
     private CardView cardView;
+    private TokenManager tokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class TrainActivity extends AppCompatActivity {
 //                ApiClientSIPKS api = ServerSIPKS.builder().create(ApiClientSIPKS.class);
 //                Call<ResponseAll> fill = api.train("dwi.syn@gmail.com",Constans.getNip(),"mis12345");
 
-                ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
                 Call<ResponseApi> train = api.train(Constans.getNip(), Constans.getPassword());
 
                 final SweetAlertDialog pDialog = new SweetAlertDialog(TrainActivity.this, SweetAlertDialog.PROGRESS_TYPE);

@@ -24,6 +24,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.DataAgenda;
 import id.ac.its.attendance.Response.Attendance.DataRuangan;
 import id.ac.its.attendance.Response.Attendance.ResponseAgendaAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.AccessToken;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
 import com.google.android.gms.common.ConnectionResult;
@@ -42,9 +43,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+
 
 public class MainAttendanceFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks,
@@ -61,6 +65,7 @@ public class MainAttendanceFragment extends Fragment implements
     private Location mylocation;
     private Location ruangLoc;
     private String idAgenda;
+    private TokenManager tokenManager;
 
     public MainAttendanceFragment() {
         // Required empty public constructor
@@ -87,7 +92,7 @@ public class MainAttendanceFragment extends Fragment implements
                 ruangLoc.setLatitude(ruang.getLatitude());
                 ruangLoc.setLongitude(ruang.getLongitude());
 
-                updateLocation(mylocation);
+
             }
         });
 
@@ -99,41 +104,11 @@ public class MainAttendanceFragment extends Fragment implements
     }
 
     private void getAgenda() {
-        ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
-        Call<ResponseAgendaAttendance> getAgenda = api.getAgenda();
-        getAgenda.enqueue(new Callback<ResponseAgendaAttendance>() {
-            @Override
-            public void onResponse(Call<ResponseAgendaAttendance> call, Response<ResponseAgendaAttendance> response) {
-                if (response.code() == 200) {
-                    ArrayList<DataAgenda> agendas = response.body().getData();
-                    for (DataAgenda agenda : agendas) {
-                        agendaNama.add(agenda.getNamaSingkat());
-                        agendaMap.put(agenda.getNamaSingkat(), agenda);
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, agendaNama);
-                    agendaSpinner.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseAgendaAttendance> call, Throwable t) {
-                Log.d("agenda", "Fail");
-            }
-        });
+        tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs",getActivity().MODE_PRIVATE));
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
     }
 
-    private void updateLocation(Location mylocation) {
-        if (mylocation == null || ruangLoc == null) return;
-        float distanceInMeters = 0;
 
-        distanceInMeters = ruangLoc.distanceTo(mylocation) / 10; // dibagi 10 krn error kesalahan GPS 10 sd 13 meter
-        if (distanceInMeters < 10) {
-            goToPredict(mylocation);
-        } else {
-            Toast.makeText(getContext(), "Tidak bisa melakukan absensi, jarak anda: " + distanceInMeters + "m dari ruangan.", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void goToPredict(Location mylocation) {
         Intent intent = new Intent(getContext(), NewPredictActivity.class);

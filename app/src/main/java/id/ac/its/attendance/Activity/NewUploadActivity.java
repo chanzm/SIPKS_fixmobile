@@ -38,6 +38,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 import id.ac.its.attendance.Utility.PermissionsDelegate;
 
@@ -61,6 +62,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
     private CameraView cameraView;
     private Button capture;
     private TextView txtDetected;
+    private TokenManager tokenManager;
 
     private int STATE_NOW = 0;
     private int STATE_BLINK_PERTAMA = 1;
@@ -209,9 +211,10 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
 
     public void send(Bitmap bitmap) {
         Bitmap result = Bitmap.createScaledBitmap(bitmap, 96,96, true);
-
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
         String myBase64Image = Constans.encodeToBase64(result, Bitmap.CompressFormat.JPEG, 100);
-        ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+
         Call<ResponseApi> upload = api.kirim(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
 
         final SweetAlertDialog pDialog = new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.PROGRESS_TYPE);

@@ -13,6 +13,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 import com.williamww.silkysignature.views.SignaturePad;
 
@@ -25,6 +26,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
 
     private SignaturePad mSignaturePad;
     private Button mClearButton, mSaveButton;
+    private TokenManager tokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +74,8 @@ public class PredictSignatureActivity extends AppCompatActivity {
 
                 // ApiClientSIPKS api = ServerSIPKS.builder(SignautureActivity.this).create(ApiClientSIPKS.class);
                 // Call<ResponseAll> fill = api.ttd("dwi.syn@gmail.com","data:image/jpeg;base64,"+myBase64Image, Constans.getNip(),"mis12345");
-
-                ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
                 Call<ResponseApi> predict;
 
                 final String cmd = getIntent().getStringExtra("cmd");

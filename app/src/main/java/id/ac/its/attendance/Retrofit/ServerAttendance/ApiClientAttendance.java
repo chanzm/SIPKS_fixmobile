@@ -4,6 +4,7 @@ import id.ac.its.attendance.Response.Attendance.ResponseAgendaAttendance;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Response.Attendance.ResponseLoginAttendance;
 
+import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -77,7 +78,13 @@ public interface ApiClientAttendance {
 
     @FormUrlEncoded
     @POST("login")
-    Call<ResponseLoginAttendance> login(@Field("email") String nip,
+    Call<AccessToken> login(@Field("email") String nip,
                                         @Field("password") String password);
 
+    @POST("refresh")
+    @FormUrlEncoded
+    Call<AccessToken> refresh(@Field("refresh_token") String refreshToken);
+
+    @GET("profile")
+    Call<ProfileResponse> getprofile();
 }

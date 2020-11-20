@@ -13,6 +13,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
@@ -31,6 +32,7 @@ public class UploadActivity extends AppCompatActivity {
     private CameraView camerad;
     private CameraKitEventListener cameradListener;
     private Button btn;
+    private TokenManager tokenManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,8 @@ public class UploadActivity extends AppCompatActivity {
 */
 
                 String myBase64Image = Constans.encodeToBase64(result, Bitmap.CompressFormat.JPEG, 100);
-                ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
                 Call<ResponseApi> upload = api.kirim(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
 
                 final SweetAlertDialog pDialog = new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.PROGRESS_TYPE);

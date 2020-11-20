@@ -13,32 +13,43 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import id.ac.its.attendance.R;
+import id.ac.its.attendance.Response.Profile.ProfileResponse;
+import id.ac.its.attendance.Retrofit.ServerAttendance.AccessToken;
+import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Intent intent;
-    private TextView nama,sekolah,namabar,sekolahbar,bagian;
+    private TextView nama,sekolah,namabar,sekolahbar,bagian,role;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TokenManager tokenManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -54,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         nama = findViewById(R.id.nama);
         namabar = headerView.findViewById(R.id.nama_nav);
         sekolahbar = headerView.findViewById(R.id.textView);
-        sekolah = findViewById(R.id.jabatan);
+        role = findViewById(R.id.jabatan);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        bagian = findViewById(R.id.bagian);
 
@@ -63,12 +74,30 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
         setupViewPager(viewPager);
 
-        nama.setText(Constans.getNama());
-        namabar.setText(Constans.getNama());
-        sekolahbar.setText(Constans.getNip());
-        sekolah.setText(Constans.getNip());
-//        bagian.setText(Constans.getBagian());
+        getProfile();
 //        setupTabIcons();
+    }
+
+    private void getProfile(){
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+        final Call<ProfileResponse> profile = api.getprofile();
+        profile.enqueue(new Callback<ProfileResponse>() {
+            @Override
+            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                if(response.isSuccessful()){
+                    ProfileResponse profileResponse = response.body();
+                    nama.setText(profileResponse.getProfile().getName());
+                    role.setText(profileResponse.getProfile().getRoleAkun().equals("1")?"Kepala Sekolah":"Bendahara Sekolah");
+                    
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

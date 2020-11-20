@@ -39,6 +39,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 import id.ac.its.attendance.Utility.PermissionsDelegate;
 
@@ -53,6 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
+
 public class NewPredictActivity extends AppCompatActivity implements FrameProcessor {
     private static final String LOGGING_TAG = "New Upload Activity";
     private static final String TAG = "PredictActivity";
@@ -62,6 +64,7 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
     private CameraView cameraView;
     private Button capture;
     private TextView txtDetected;
+    private TokenManager tokenManager;
 
     private String cmd, latitude, longitude, idAgenda;
 
@@ -215,8 +218,8 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
 //                Log.d("test", "onImage: "+myBase64Image);
 
         Call<ResponseApi> predict;
-
-        ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+        tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
         cmd = getIntent().getStringExtra("cmd");
         if (cmd != null && !cmd.isEmpty() && cmd.equals("absen")) {
             latitude = String.valueOf(getIntent().getDoubleExtra("latitude", 0));

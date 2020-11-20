@@ -15,6 +15,7 @@ import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
+import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
 import id.ac.its.attendance.Utility.Constans;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
@@ -34,6 +35,8 @@ public class PredictyActivity extends AppCompatActivity {
     private CameraView camerad;
     private CameraKitEventListener cameradListener;
     private Button btn;
+    private TokenManager tokenManager;
+
     ConfirmFragment Confirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +79,8 @@ public class PredictyActivity extends AppCompatActivity {
 //                Log.d("test", "onImage: "+myBase64Image);
 
                 Call<ResponseApi> predict;
-
-                ApiClientAttendance api = ServerAttendance.builder().create(ApiClientAttendance.class);
+                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
                 String cmd = getIntent().getStringExtra("cmd");
                 if (cmd != null && !cmd.isEmpty() && cmd.equals("absen")) {
                     String latitude = String.valueOf(getIntent().getDoubleExtra("latitude", 0));

@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerSIPKS {
     private static Retrofit retrofit = null;
-    public final static String BASE_URL = "https://103.76.17.4:20443/";
-    private final static String API_BASE_URL = BASE_URL+"api/v1/";
+    public final static String BASE_URL = "http://10.0.2.2:8000/";
+//    private final static String API_BASE_URL = BASE_URL+"api/v1/";
 
     public static Retrofit builder(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -19,7 +19,7 @@ public class ServerSIPKS {
 
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(SelfSigningClientBuilder.createClient(context))
                     .build();

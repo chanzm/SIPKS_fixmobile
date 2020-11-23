@@ -87,4 +87,9 @@ public interface ApiClientAttendance {
 
     @GET("profile")
     Call<ProfileResponse> getprofile();
+
+    @GET("pengajuan")
+    Call<ProfileResponse> getpengajuan();
+
+
 }

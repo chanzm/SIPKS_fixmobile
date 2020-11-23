@@ -117,57 +117,58 @@ public class LoginActivity extends AppCompatActivity {
 //                    Log.d("btn","mulai klik");
                     login();
 
-                    final SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
-                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitleText("Loading");
-                    pDialog.show();
-                    ApiClientSIPKS api = ServerSIPKS.builder(LoginActivity.this).create(ApiClientSIPKS.class);
-                    Call<ResponseLogin> login = api.login(email.getText().toString().trim(),password.getText().toString().trim());
-                    login.enqueue(new Callback<ResponseLogin>() {
-                        @Override
-                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            pDialog.dismiss();
-                            if(response.code()==200)
-                            {
-//                                Log.d("btn","ini sukses");
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            else
-                            {
-
-                                new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                        .setTitleText("Login Gagal")
-                                        .setContentText("Password Atau Username Anda Salah")
-                                        .setConfirmText("OK")
-                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                            @Override
-                                            public void onClick(SweetAlertDialog sDialog) {
-                                                sDialog.dismiss();
-                                            }
-                                        }).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                            System.out.print( "=====" +call.toString());
-                            t.toString();
-                            pDialog.dismiss();
-                            new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Internet")
-                                    .setContentText("Internet Anda bermasalah")
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismiss();
-                                        }
-                                    }).show();
-                            Log.d("btn","ini gagal");
-                        }
-                    });
+//                    final SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+//                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+//                    pDialog.setTitleText("Loading");
+//                    pDialog.show();
+//                    ApiClientSIPKS api = ServerSIPKS.builder(LoginActivity.this).create(ApiClientSIPKS.class);
+//                    Call<ResponseLogin> login = api.login(email.getText().toString().trim(),password.getText().toString().trim());
+//                    login.enqueue(new Callback<ResponseLogin>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+//                            pDialog.dismiss();
+//                            if(response.code()==200)
+//                            {
+////                                Log.d("btn","ini sukses");
+//                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+//                            else
+//                            {
+//
+//                                new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.WARNING_TYPE)
+//                                        .setTitleText("Login Gagal")
+//                                        .setContentText("Password Atau Username Anda Salah")
+//                                        .setConfirmText("OK")
+//                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                            @Override
+//                                            public void onClick(SweetAlertDialog sDialog) {
+//                                                sDialog.dismiss();
+//                                            }
+//                                        }).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseLogin> call, Throwable t) {
+//                            System.out.print( "=====" +call.toString());
+//                            t.toString();
+//                            Log.d("TAG", "onFailure: Disini kerja");
+//                            pDialog.dismiss();
+//                            new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                                    .setTitleText("Internet")
+//                                    .setContentText("Internet Anda bermasalah")
+//                                    .setConfirmText("OK")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sDialog) {
+//                                            sDialog.dismiss();
+//                                        }
+//                                    }).show();
+//                            Log.d("btn","ini gagal");
+//                        }
+//                    });
                     break;
 
             }

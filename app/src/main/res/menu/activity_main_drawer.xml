@@ -35,4 +35,11 @@
             android:title="Predict Signature" />
     </group>
 
+    <group android:id="@+id/nav_logout" android:checkableBehavior="single">
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/signature"
+            android:title="Logout" />
+    </group>
+
 </menu>

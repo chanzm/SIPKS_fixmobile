@@ -1,7 +1,5 @@
 package id.ac.its.attendance.Activity;
 
-
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

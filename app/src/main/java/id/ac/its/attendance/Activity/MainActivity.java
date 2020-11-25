@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewPager(ViewPager viewPager) {
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
-//        viewPager.setAdapter(adapter);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
+        viewPager.setAdapter(adapter);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -193,7 +193,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_sudah) {
+            intent = new Intent(MainActivity.this, SudahActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_camera) {
             intent = new Intent(MainActivity.this, NewUploadActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_predict) {

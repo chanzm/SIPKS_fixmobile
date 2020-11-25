@@ -1,9 +1,11 @@
 package id.ac.its.attendance.Retrofit.ServerAttendance;
 
+import java.util.List;
+
 import id.ac.its.attendance.Response.Attendance.ResponseAgendaAttendance;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
-import id.ac.its.attendance.Response.Attendance.ResponseLoginAttendance;
 
+import id.ac.its.attendance.Response.Pengajuan.Pengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -11,7 +13,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiClientAttendance {
     @FormUrlEncoded
@@ -89,7 +90,7 @@ public interface ApiClientAttendance {
     Call<ProfileResponse> getprofile();
 
     @GET("pengajuan")
-    Call<ProfileResponse> getpengajuan();
+    Call<List<Pengajuan>> getpengajuan();
 
 
 }

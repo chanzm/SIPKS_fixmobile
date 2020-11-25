@@ -106,5 +106,7 @@
             android:id="@+id/viewpager">
 
         </androidx.viewpager.widget.ViewPager>
+        
+
     </LinearLayout>
 </RelativeLayout>

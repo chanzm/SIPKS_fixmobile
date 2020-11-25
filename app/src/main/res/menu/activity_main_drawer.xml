@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <group android:id="@+id/nav_logout" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sudah"
+            android:icon="@drawable/check"
+            android:title="Sudah Konfirmasi" />
+    </group>
+
     <group android:id="@+id/nav_face_group" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"

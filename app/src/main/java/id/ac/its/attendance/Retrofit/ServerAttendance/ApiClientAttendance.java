@@ -6,6 +6,7 @@ import id.ac.its.attendance.Response.Attendance.ResponseAgendaAttendance;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 
 import id.ac.its.attendance.Response.Pengajuan.Pengajuan;
+import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -90,7 +91,7 @@ public interface ApiClientAttendance {
     Call<ProfileResponse> getprofile();
 
     @GET("pengajuan")
-    Call<List<Pengajuan>> getpengajuan();
+    Call<ResponsePengajuan> getpengajuan();
 
 
 }

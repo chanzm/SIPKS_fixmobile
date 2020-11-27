@@ -35,19 +35,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.AdapterHolder>
     }
 
     @Override
+//    memetakan data taruh ke view
     public void onBindViewHolder(@NonNull AdapterHolder holder, int position) {
         final Pengajuan pengajuan = dataList.get(position);
         String title = pengajuan.getJudulPengajuan();
         int body = pengajuan.getJumlahPengajuan();
         Object tanggal =  pengajuan.getCreatedAt();
+
+//        holder.judul.setText(title);
     }
 
     @Override
+    //menghitung listnya
     public int getItemCount() {
-
         return dataList.size();
     }
 
+
+    //memetakan view ke dalam objek
     public class AdapterHolder extends RecyclerView.ViewHolder {
         TextView judul, jumlah, tanggal;
 

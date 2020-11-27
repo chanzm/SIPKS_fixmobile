@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Adapter;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import id.ac.its.attendance.R;
 
@@ -48,21 +51,22 @@ public class SudahActivity extends AppCompatActivity {
 
 
         ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-        final Call<List<Pengajuan>> call = api.getpengajuan();
+        final Call<ResponsePengajuan> call = api.getpengajuan();
 
-        call.enqueue(new Callback<List<Pengajuan>>() {
+        call.enqueue(new Callback<ResponsePengajuan>() {
             @Override
-            public void onResponse(Call<List<Pengajuan>> call, Response<List<Pengajuan>> response) {
+            public void onResponse(Call<ResponsePengajuan> call, Response<ResponsePengajuan> response) {
+                Log.e("TAG", "onResponse: "+new Gson().toJson(response));
                 if(response.isSuccessful()){
-                    List<Pengajuan> get = response.body();
-                    adapter = new ListAdapter(SudahActivity.this, get);
-
+                    ResponsePengajuan get = response.body();
+                    adapter = new ListAdapter(SudahActivity.this, get.getPengajuan());
+                    recyclerView.setAdapter(adapter);
                     return;
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Pengajuan>> call, Throwable t) {
+            public void onFailure(Call<ResponsePengajuan> call, Throwable t) {
                 System.out.println("failed" + t.toString());
             }
         });

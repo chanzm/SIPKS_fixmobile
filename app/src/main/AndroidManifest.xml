@@ -23,6 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon,android:theme">
         <activity android:name=".Activity.SudahActivity"></activity>
+        <activity android:name=".Activity.DetailPengajuanActivity"></activity>
         <activity android:name=".Activity.TrainSignatureActivity" />
         <activity android:name=".Activity.PredictSignatureActivity" />
         <activity android:name=".Activity.UploadSignatureActivity" />

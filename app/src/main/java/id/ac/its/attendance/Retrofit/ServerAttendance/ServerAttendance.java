@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerAttendance {
 
-    public final static String BASE_URL = "http://192.168.0.106/sipks/public/api/"; // API laptop server
+    public final static String BASE_URL = "http://192.168.1.8/sipks/public/api/"; // API laptop server
 //    private final static String API_BASE_URL = BASE_URL+"api/v1/";
 
     private final static OkHttpClient client = buildClient();

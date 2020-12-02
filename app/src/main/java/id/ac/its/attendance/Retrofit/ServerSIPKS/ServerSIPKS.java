@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerSIPKS {
     private static Retrofit retrofit = null;
-    public final static String BASE_URL = "http://192.168.0.106/sipks/public/api/";
+    public final static String BASE_URL = "http://192.168.1.8/sipks/public/api/";
 //    private final static String API_BASE_URL = BASE_URL+"api/v1/";
 
     public static Retrofit builder(Context context) {

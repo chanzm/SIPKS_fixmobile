@@ -4,8 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class Profile{
 
+	@SerializedName("profile")
+	private Profile profile;
+
 	@SerializedName("alamat_akun")
 	private String alamatAkun;
+
+	@SerializedName("id_sekolah")
+	private int idSekolah;
 
 	@SerializedName("role_akun")
 	private String roleAkun;
@@ -37,8 +43,16 @@ public class Profile{
 	@SerializedName("no_telp_akun")
 	private String noTelpAkun;
 
+	public Profile getProfile(){
+		return profile;
+	}
+
 	public String getAlamatAkun(){
 		return alamatAkun;
+	}
+
+	public int getIdSekolah(){
+		return idSekolah;
 	}
 
 	public String getRoleAkun(){

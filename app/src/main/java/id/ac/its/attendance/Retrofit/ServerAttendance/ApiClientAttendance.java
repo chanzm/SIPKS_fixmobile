@@ -5,6 +5,8 @@ import java.util.List;
 import id.ac.its.attendance.Response.Attendance.ResponseAgendaAttendance;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
 
+import id.ac.its.attendance.Response.DetailPengajuan.ResponseDetailPengajuan;
+import id.ac.its.attendance.Response.OKPengajuan.OKResponse;
 import id.ac.its.attendance.Response.Pengajuan.Pengajuan;
 import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
@@ -14,6 +16,8 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiClientAttendance {
     @FormUrlEncoded
@@ -91,7 +95,12 @@ public interface ApiClientAttendance {
     Call<ProfileResponse> getprofile();
 
     @GET("pengajuan")
-    Call<ResponsePengajuan> getpengajuan();
+    Call<ResponsePengajuan> getpengajuan(@Query("status") int status);
 
+    @GET("pengajuan/detail/{id}")
+    Call<ResponseDetailPengajuan> getdetailpengajuan(@Path("id") int id);
 
+    @POST("pengajuan/detail")
+    @FormUrlEncoded
+    Call<OKResponse> postdetailpengajuan(@Field("id") int id);
 }

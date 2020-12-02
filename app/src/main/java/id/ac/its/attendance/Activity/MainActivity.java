@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         setupViewPager(viewPager);
 
         getProfile();
+        getProfileBar();
 //        setupTabIcons();
     }
 
@@ -89,6 +90,29 @@ public class MainActivity extends AppCompatActivity
                     nama.setText(profileResponse.getProfile().getName());
                     role.setText(profileResponse.getProfile().getRoleAkun().equals("1")?"Kepala Sekolah":"Bendahara Sekolah");
                     
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
+    private void getProfileBar(){
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+        final Call<ProfileResponse> profile = api.getprofile();
+        profile.enqueue(new Callback<ProfileResponse>() {
+            @Override
+            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                if(response.isSuccessful()){
+                    ProfileResponse profileResponse = response.body();
+                    namabar.setText(profileResponse.getProfile().getName());
+//                    sekolahbar.setText(profileResponse.getProfile().getIdSekolah());
+
                 }
             }
 

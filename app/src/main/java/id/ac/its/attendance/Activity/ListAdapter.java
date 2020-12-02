@@ -1,6 +1,7 @@
 package id.ac.its.attendance.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Date;
@@ -36,13 +38,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.AdapterHolder>
 
     @Override
 //    memetakan data taruh ke view
-    public void onBindViewHolder(@NonNull AdapterHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AdapterHolder holder, int position) {
         final Pengajuan pengajuan = dataList.get(position);
         String title = pengajuan.getJudulPengajuan();
         int body = pengajuan.getJumlahPengajuan();
-        Object tanggal =  pengajuan.getCreatedAt();
+        String tanggal =  pengajuan.getCreateTime();
 
-//        holder.judul.setText(title);
+
+        holder.judul.setText(title);
+        holder.jumlah.setText(String.valueOf(body));
+        holder.tanggal.setText(tanggal);
+
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,DetailPengajuanActivity.class);
+                intent.putExtra("id",pengajuan.getIdPengajuan());
+                intent.putExtra("konfirmasi",pengajuan.getStatusPengajuan());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -55,10 +70,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.AdapterHolder>
     //memetakan view ke dalam objek
     public class AdapterHolder extends RecyclerView.ViewHolder {
         TextView judul, jumlah, tanggal;
+        CardView item;
 
         public AdapterHolder(@NonNull View itemView) {
             super(itemView);
 
+            item = itemView.findViewById(R.id.item);
             judul = itemView.findViewById(R.id.list_judul);
             jumlah = itemView.findViewById(R.id.list_total);
             tanggal = itemView.findViewById(R.id.list_tanggal);

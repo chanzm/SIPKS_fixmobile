@@ -51,7 +51,7 @@ public class SudahActivity extends AppCompatActivity {
 
 
         ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-        final Call<ResponsePengajuan> call = api.getpengajuan();
+        final Call<ResponsePengajuan> call = api.getpengajuan(0);
 
         call.enqueue(new Callback<ResponsePengajuan>() {
             @Override

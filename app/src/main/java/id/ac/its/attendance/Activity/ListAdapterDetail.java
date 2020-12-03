@@ -31,7 +31,7 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
     @NonNull
     @Override
     public AdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.detailpengajuan, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_detail, parent,false);
         AdapterHolder holder = new AdapterHolder(view);
         return holder;
     }
@@ -40,24 +40,25 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
 //    memetakan data taruh ke view
     public void onBindViewHolder(@NonNull final ListAdapterDetail.AdapterHolder holder, int position) {
         final DetailPengajuan detailpengajuan = dataList.get(position);
-//        String title = detailpengajuan.getJudulPengajuan();
-//        int body = detailpengajuan.getJumlahPengajuan();
-//        String tanggal =  detailpengajuan.getCreateTime();
+        String nama_detail = detailpengajuan.getNamaDetail();
+        int hargasatu = detailpengajuan.getHargaSatuanDetail();
+        int jumlah = detailpengajuan.getJumlahDetail();
+        int total_harga = detailpengajuan.getTotalHargaDetail();
 
+//        holder.nama.setText(nama_detail);
+//        holder.hargasatu.setText(String.valueOf(hargasatu));
+//        holder.jumlah.setText(String.valueOf(jumlah));
+//        holder.total.setText(String.valueOf(total_harga));
 
-//        holder.judul.setText(title);
-//        holder.jumlah.setText(String.valueOf(body));
-//        holder.tanggal.setText(tanggal);
-
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,DetailPengajuanActivity.class);
-//                intent.putExtra("id",pengajuan.getIdPengajuan());
-//                intent.putExtra("konfirmasi",pengajuan.getStatusPengajuan());
-                context.startActivity(intent);
-            }
-        });
+//        holder.konfirmasi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,DetailPengajuanActivity.class);
+//                intent.putExtra("id",detailpengajuan.getIdPengajuan());
+//                intent.putExtra("konfirmasi",detailpengajuan.getStatusPengajuan());
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -70,16 +71,17 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
 
     //memetakan view ke dalam objek
     public class AdapterHolder extends RecyclerView.ViewHolder {
-        TextView judul, jumlah, tanggal;
-        CardView item;
+        TextView nama,hargasatu,jumlah,total;
+        CardView item_detail;
 
         public AdapterHolder(@NonNull View itemView) {
             super(itemView);
 
-            item = itemView.findViewById(R.id.item);
-            judul = itemView.findViewById(R.id.list_judul);
-            jumlah = itemView.findViewById(R.id.list_total);
-            tanggal = itemView.findViewById(R.id.list_tanggal);
+            item_detail = itemView.findViewById(R.id.item_detail);
+            nama = itemView.findViewById(R.id.list_nama_detail);
+            hargasatu = itemView.findViewById(R.id.list_harga_satuan);
+            jumlah = itemView.findViewById(R.id.list_jumlah);
+            total = itemView.findViewById(R.id.list_total);
 
         }
     }

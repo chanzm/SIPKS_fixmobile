@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/item_detail">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/list_nama_detail"
-            android:textSize="20dp"
-            android:text="Nama Detail "/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Detail "
+            android:textSize="20dp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/list_harga_satuan"
-            android:text="Harga satuan : "/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga satuan : " />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/list_jumlah"
-            android:text="Jumlah barang"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jumlah barang" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/list_total"
-            android:text="Total harga per barang"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total harga" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

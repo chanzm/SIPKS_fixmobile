@@ -2,13 +2,15 @@ package id.ac.its.attendance.Response.DetailPengajuan;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponseDetailPengajuan {
 
-    @SerializedName("detailpengajuan")
-    private DetailPengajuan detailpengajuan;
+    @SerializedName("detailpeng")
+    private List<DetailPengajuan> detailpeng;
 
-    public DetailPengajuan getDetailPengajuan(){
-        return detailpengajuan;
+    public List<DetailPengajuan> getDetailpeng(){
+        return detailpeng;
     }
 }
 

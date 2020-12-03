@@ -84,7 +84,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.AdapterH
         public AdapterHolder(@NonNull View itemView) {
             super(itemView);
 
-            item = itemView.findViewById(R.id.item_detail);
+            item = itemView.findViewById(R.id.item_list_detail);
             judul = itemView.findViewById(R.id.list_nama_detail);
             satuan = itemView.findViewById(R.id.list_harga_satuan);
             jumlah = itemView.findViewById(R.id.list_jumlah);

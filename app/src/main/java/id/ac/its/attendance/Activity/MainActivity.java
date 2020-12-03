@@ -6,20 +6,26 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import id.ac.its.attendance.R;
+import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import id.ac.its.attendance.Retrofit.ServerAttendance.AccessToken;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TokenManager tokenManager;
+    RecyclerView recyclerView;
+    ListAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
 
 
     @Override
@@ -50,6 +59,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+        recyclerView = findViewById(R.id.list_pengajuan);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -66,17 +79,37 @@ public class MainActivity extends AppCompatActivity
         namabar = headerView.findViewById(R.id.nama_nav);
         sekolahbar = headerView.findViewById(R.id.textView);
         role = findViewById(R.id.jabatan);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-//        bagian = findViewById(R.id.bagian);
-
-
-//        tabLayout = (TabLayout) findViewById(R.id.tablayout);
-//        tabLayout.setupWithViewPager(viewPager);
-        setupViewPager(viewPager);
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
 
         getProfile();
         getProfileBar();
+        getList();
 //        setupTabIcons();
+    }
+
+    private void getList() {
+        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+        final Call<ResponsePengajuan> call = api.getpengajuan(0);
+
+        call.enqueue(new Callback<ResponsePengajuan>() {
+            @Override
+            public void onResponse(Call<ResponsePengajuan> call, Response<ResponsePengajuan> response) {
+                Log.e("TAG", "onResponse: "+new Gson().toJson(response));
+                if(response.isSuccessful()){
+                    ResponsePengajuan get = response.body();
+                    adapter = new ListAdapter(MainActivity.this, get.getPengajuan());
+                    recyclerView.setAdapter(adapter);
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponsePengajuan> call, Throwable t) {
+                System.out.println("failed" + t.toString());
+            }
+        });
+
     }
 
     private void getProfile(){
@@ -123,12 +156,12 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
-        viewPager.setAdapter(adapter);
-    }
+//
+//    private void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFragment(new MainAttendanceFragment(), "Attendance");
+//        viewPager.setAdapter(adapter);
+//    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +72,9 @@ public  class MainAttendanceFragment extends Fragment{
     private Location ruangLoc;
     private String idAgenda;
     private TokenManager tokenManager;
+    RecyclerView recyclerView;
+    ListAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
 
 //    View view = inflater.inflate(R.layout.fragment_main_attendance, container, false);
 
@@ -76,160 +82,13 @@ public  class MainAttendanceFragment extends Fragment{
         // Required empty public constructor
     }
 //
-//    @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_attendance, container, false);
         return view;
+
     }
-//
-////        agendaSpinner = view.findViewById(R.id.spinnerAgenda);
-////        btnGo = view.findViewById(R.id.btn_attendance_go);
-//        agendaNama = new ArrayList<>();
-//        agendaMap = new HashMap<>();
-
-//        getAgenda();
-
-//        btnGo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                idAgenda = agendaMap.get(agendaSpinner.getSelectedItem().toString()).getId();
-//                DataRuangan ruang = agendaMap.get(agendaSpinner.getSelectedItem().toString()).getRuangan();
-//                ruangLoc = new Location("");
-//                ruangLoc.setLatitude(ruang.getLatitude());
-//                ruangLoc.setLongitude(ruang.getLongitude());
-//            }
-//        });
-
-//        if (checkPermissionsLocation()) {
-//            setUpGPSClient();
-//        }
-//
-//        return view;
-//    }
-//
-//    private void getAgenda() {
-//        tokenManager = TokenManager.getInstance(getActivity().getSharedPreferences("prefs",getActivity().MODE_PRIVATE));
-//        ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-//    }
 
 
-//
-//    private void goToPredict(Location mylocation) {
-//        Intent intent = new Intent(getContext(), NewPredictActivity.class);
-//        intent.putExtra("cmd", "absen");
-//        intent.putExtra("latitude", mylocation.getLatitude());
-//        intent.putExtra("longitude", mylocation.getLongitude());
-//        intent.putExtra("idAgenda", idAgenda);
-//        startActivity(intent);
-//    }
-//
-//    @Override
-//    public void onConnected(@Nullable Bundle bundle) {
-//        addCallbackGPS();
-//    }
-//
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//
-//    }
-//
-//    @Override
-//    public void onLocationChanged(Location location) {
-//        mylocation = location;
-//    }
-//
-//    private synchronized void setUpGPSClient() {
-//        googleApiClient = new GoogleApiClient.Builder(getActivity())
-//                .enableAutoManage(getActivity(), 0, this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .addApi(LocationServices.API)
-//                .build();
-//        googleApiClient.connect();
-//    }
-//
-//    private boolean checkPermissionsLocation() {
-//        int permissionLocation = ContextCompat.checkSelfPermission(getActivity(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION);
-//        List<String> listPermissionsNeeded = new ArrayList<>();
-//
-//        if (permissionLocation != PackageManager.PERMISSION_GRANTED) {
-//            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
-//        }
-//
-//        if (!listPermissionsNeeded.isEmpty()) {
-//            requestPermissions(
-//                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        int permissionLocation = ContextCompat.checkSelfPermission(getActivity(),
-//                Manifest.permission.ACCESS_FINE_LOCATION);
-//        if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
-//            //Toast.makeText(getActivity(),"permission camera & location granted",Toast.LENGTH_SHORT).show();
-//            setUpGPSClient();
-//        }
-//    }
-//
-//    @SuppressLint("MissingPermission")
-//    private void addCallbackGPS(){
-//        mylocation =  LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-//        LocationRequest locationRequest = new LocationRequest();
-//        locationRequest.setInterval(1000);
-//        locationRequest.setFastestInterval(1000);
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-//                .addLocationRequest(locationRequest);
-//        builder.setAlwaysShow(true);
-//        LocationServices.FusedLocationApi
-//                .requestLocationUpdates(googleApiClient, locationRequest, this);
-//        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi
-//                .checkLocationSettings(googleApiClient, builder.build());
-//        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-//            @Override
-//            public void onResult(LocationSettingsResult result) {
-//                final Status status = result.getStatus();
-//                switch (status.getStatusCode()) {
-//                    case LocationSettingsStatusCodes.SUCCESS:
-//                        // All location settings are satisfied.
-//                        // You can initialize location requests here.
-//
-//                        mylocation = LocationServices.FusedLocationApi
-//                                .getLastLocation(googleApiClient);
-//                        break;
-//                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-//                        // Location settings are not satisfied.
-//                        // But could be fixed by showing the user a dialog.
-//                        try {
-//                            // Show the dialog by calling startResolutionForResult(),
-//                            // and check the result in onActivityResult().
-//                            // Ask to turn on GPS automatically
-//                            status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS_GPS);
-//                        } catch (IntentSender.SendIntentException e) {
-//                            // Ignore the error.
-//                        }
-//                        break;
-//                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-//                        // Location settings are not satisfied.
-//                        // However, we have no way
-//                        // to fix the
-//                        // settings so we won't show the dialog.
-//                        // finish();
-//                        break;
-//                }
-//            }
-//        });
-//    }
 }

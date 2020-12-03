@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity
 //        bagian = findViewById(R.id.bagian);
 
 
-        tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+//        tabLayout.setupWithViewPager(viewPager);
         setupViewPager(viewPager);
 
         getProfile();

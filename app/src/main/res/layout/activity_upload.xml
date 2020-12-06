@@ -22,4 +22,17 @@
 
     <include layout="@layout/content_upload_new" />
 
+    <LinearLayout
+        android:layout_width="430dp"
+        android:layout_height="130dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/okcam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK" />
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

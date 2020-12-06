@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Date;
@@ -45,10 +46,10 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
         int jumlah = detailpengajuan.getJumlahDetail();
         int total_harga = detailpengajuan.getTotalHargaDetail();
 
-//        holder.nama.setText(nama_detail);
-//        holder.hargasatu.setText(String.valueOf(hargasatu));
-//        holder.jumlah.setText(String.valueOf(jumlah));
-//        holder.total.setText(String.valueOf(total_harga));
+        holder.nama.setText(nama_detail);
+        holder.hargasatu.setText(String.valueOf(hargasatu));
+        holder.jumlah.setText(String.valueOf(jumlah));
+        holder.total.setText(String.valueOf(total_harga));
 
 //        holder.konfirmasi.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -72,7 +73,7 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
     //memetakan view ke dalam objek
     public class AdapterHolder extends RecyclerView.ViewHolder {
         TextView nama,hargasatu,jumlah,total;
-        CardView item_detail;
+        ConstraintLayout item_detail;
 
         public AdapterHolder(@NonNull View itemView) {
             super(itemView);

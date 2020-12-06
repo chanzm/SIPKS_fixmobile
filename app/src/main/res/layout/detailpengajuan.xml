@@ -37,6 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tanggal"
+                        android:id="@+id/tanggal"
                         android:textSize="14sp"
                         android:textColor="@android:color/white"/>
                     <TextView
@@ -79,6 +80,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nama Pengaju :"
+
                             android:layout_weight="1"
                             android:textStyle="bold"
                             />
@@ -102,6 +104,20 @@
                             android:id="@+id/jabatan_pengaju"
                             android:text="Jabatan Pengaju"
                             android:layout_weight="2"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status :"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_pengajuan"
+                        android:text="Status Pengajuan"
+                        android:layout_weight="2"/>
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -114,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/deskripsi"
-                        android:text="Jabatan Pengaju"
+                        android:text="Deskripsi Pengajuan"
                         android:layout_weight="2"/>
                 </LinearLayout>
         </RelativeLayout>

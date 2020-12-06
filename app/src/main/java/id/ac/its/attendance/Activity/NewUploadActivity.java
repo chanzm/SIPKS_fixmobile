@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -36,6 +37,7 @@ import com.otaliastudios.cameraview.frame.FrameProcessor;
 
 import id.ac.its.attendance.R;
 import id.ac.its.attendance.Response.Attendance.ResponseApi;
+import id.ac.its.attendance.Response.OKPengajuan.OKResponse;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ServerAttendance;
 import id.ac.its.attendance.Retrofit.ServerAttendance.TokenManager;
@@ -60,7 +62,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
     private boolean hasCameraPermission;
     private CameraView cameraView;
-    private Button capture;
+    private Button capture,okcam;
     private TextView txtDetected;
     private TokenManager tokenManager;
 
@@ -71,6 +73,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
     private float LEFT_EYE_CLOSE_PROB = 0.15F;
     private float RIGHT_EYE_CLOSE_PROB = 0.15F;
     private float SMILING_PROB = 0.80F;
+    private int id;
 
 
     @Override
@@ -80,12 +83,14 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        id = getIntent().getIntExtra("id",0);
 
         cameraView = findViewById(R.id.camera_view);
         capture = findViewById(R.id.btn_capture);
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
 
         txtDetected = findViewById(R.id.txtDetected);
+        okcam = findViewById(R.id.okcam);
 
         cameraView.setFacing(Facing.FRONT);
         cameraView.setLifecycleOwner(this);
@@ -106,12 +111,53 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
         @Override
         public void onPictureTaken(@NonNull PictureResult result) {
             super.onPictureTaken(result);
-            result.toBitmap(96, 96, new BitmapCallback() {
+//            result.toBitmap(96, 96, new BitmapCallback() {
+//                @Override
+//                public void onBitmapReady(@Nullable Bitmap bitmap) {
+//                    send(bitmap);
+//                }
+//            });
+            ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+            Call<OKResponse> call = api.postdetailpengajuan(id);
+            call.enqueue(new Callback<OKResponse>() {
                 @Override
-                public void onBitmapReady(@Nullable Bitmap bitmap) {
-                    send(bitmap);
+                public void onResponse(Call<OKResponse> call, Response<OKResponse> response) {
+                    if(response.isSuccessful()){
+                        //intent berhasil
+//                        pDialog.dismiss();
+//                        new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+//                                .setTitleText("Hasil")
+//                                .setContentText("Berhasil")
+//                                .setConfirmText("OK")
+//                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sDialog) {
+//                                        sDialog.dismissWithAnimation();
+//                                    }
+//                                }).show();
+                        okcam.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+//                                Log.w("lalalayeye",call.body().getStatus());
+                                Intent intent = new Intent(NewUploadActivity.this, BerhasilActivity.class);
+                                intent.putExtra("id",id);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<OKResponse> call, Throwable t) {
+
                 }
             });
+
+
+
+
         }
     }
 

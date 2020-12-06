@@ -193,10 +193,10 @@ public class MainActivity extends AppCompatActivity
     }
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
             new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Keluar Aplikasi")
                     .setContentText("Apakah ingin keluar Aplikasi")
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity
                     })
                     .show();
 //            super.onBackPressed();
-        }
+//        }
     }
 
     @Override
@@ -271,6 +271,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_predict_signature) {
             intent = new Intent(MainActivity.this, PredictSignatureActivity.class);
             startActivity(intent);
+        } else if(id== R.id.logout){
+            Log.w("tesmasuk","bebas");
+            this.onBackPressed();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

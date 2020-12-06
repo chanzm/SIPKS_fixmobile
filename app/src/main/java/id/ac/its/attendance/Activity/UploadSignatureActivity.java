@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +27,13 @@ public class UploadSignatureActivity extends AppCompatActivity {
     private SignaturePad mSignaturePad;
     private Button mClearButton, mSaveButton;
     private TokenManager tokenManager;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_signature);
+        id = getIntent().getIntExtra("id",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,15 +71,15 @@ public class UploadSignatureActivity extends AppCompatActivity {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
-                String myBase64Image = Constans.encodeToBase64(signatureBitmap, Bitmap.CompressFormat.JPEG, 100);
+//                Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
+//                String myBase64Image = Constans.encodeToBase64(signatureBitmap, Bitmap.CompressFormat.JPEG, 100);
 
                 // ApiClientSIPKS api = ServerSIPKS.builder(SignautureActivity.this).create(ApiClientSIPKS.class);
                 // Call<ResponseAll> fill = api.ttd("dwi.syn@gmail.com","data:image/jpeg;base64,"+myBase64Image, Constans.getNip(),"mis12345");
 
-                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
-                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-                Call<ResponseApi> upload = api.sendSignature(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
+//                tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+//                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+//                Call<ResponseApi> upload = api.sendSignature(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
 
                 final SweetAlertDialog pDialog = new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -84,14 +87,14 @@ public class UploadSignatureActivity extends AppCompatActivity {
                 pDialog.setCancelable(false);
                 pDialog.show();
 
-                upload.enqueue(new Callback<ResponseApi>() {
-                    @Override
-                    public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
-                        if(response.code() == 200) {
+//                upload.enqueue(new Callback<ResponseApi>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+//                        if(response.code() == 200) {
                             pDialog.dismiss();
                             new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Hasil")
-                                    .setContentText(response.body().getMsg())
+                                    .setContentText("Berhasil")
                                     .setConfirmText("OK")
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
@@ -101,36 +104,39 @@ public class UploadSignatureActivity extends AppCompatActivity {
                                     }).show();
 
                             mSignaturePad.clear();
-                        } else {
-                            pDialog.dismiss();
-                            new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                    .setTitleText("Error")
-                                    .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismissWithAnimation();
-                                        }
-                                    }).show();
-                        }
-                    }
+                            Intent intent = new Intent(UploadSignatureActivity.this, NewUploadActivity.class);
+                            intent.putExtra("id",id);
+                            startActivity(intent);
+//                        } else {
+//                            pDialog.dismiss();
+//                            new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.WARNING_TYPE)
+//                                    .setTitleText("Error")
+//                                    .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
+//                                    .setConfirmText("OK")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sDialog) {
+//                                            sDialog.dismissWithAnimation();
+//                                        }
+//                                    }).show();
+//                        }
+//                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseApi> call, Throwable t) {
-                        pDialog.dismiss();
-                        new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText("Hasil")
-                                .setContentText("Internet Anda Bermasalah")
-                                .setConfirmText("OK")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismissWithAnimation();
-                                    }
-                                }).show();
-                    }
-                });
+//                    @Override
+//                    public void onFailure(Call<ResponseApi> call, Throwable t) {
+//                        pDialog.dismiss();
+//                        new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                                .setTitleText("Hasil")
+//                                .setContentText("Internet Anda Bermasalah")
+//                                .setConfirmText("OK")
+//                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sDialog) {
+//                                        sDialog.dismissWithAnimation();
+//                                    }
+//                                }).show();
+//                    }
+//                });
             }
         });
     }

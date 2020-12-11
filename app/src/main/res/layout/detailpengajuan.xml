@@ -118,7 +118,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status :"
+                        android:text="Status Konfirmasi Bendahara :"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_pengajuan_bend"
+                        android:text="Status Bendahara"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status Konfirmasi Kepala Sekolah :"
                         android:layout_weight="1"
                         android:textStyle="bold"
                         />
@@ -126,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/status_pengajuan"
-                        android:text="Status Pengajuan"
+                        android:text="Status Kepala Sekolah"
                         android:layout_weight="2"/>
 
 

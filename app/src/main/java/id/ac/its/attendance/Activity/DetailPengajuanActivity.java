@@ -29,7 +29,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
     private String confirm;
     private TokenManager tokenManager;
     private RecyclerView recyclerView;
-    private TextView judul,tanggal,total,nama_pengaju,jabatan,deskripsi,status;
+    private TextView judul,tanggal,total,nama_pengaju,jabatan,deskripsi,status_bend, status_kepsek;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +48,8 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         nama_pengaju = findViewById(R.id.nama_pengaju);
         jabatan = findViewById(R.id.jabatan_pengaju);
         deskripsi = findViewById(R.id.deskripsi);
-        status = findViewById(R.id.status_pengajuan);
+        status_bend = findViewById(R.id.status_pengajuan_bend);
+        status_kepsek = findViewById(R.id.status_pengajuan);
 
         if (confirm.equals("1")) {
             konfirmasi.setVisibility(View.GONE);
@@ -69,7 +70,8 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                     nama_pengaju.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
                     jabatan.setText(response.body().getDetailpeng().get(0).getJabatanPembuatPengajuan());
                     deskripsi.setText(response.body().getDetailpeng().get(0).getDeskripsiPengajuan());
-                    status.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")?"Sudah Dikonfirmasi":"Belum Dikonfirmasi");
+                    status_bend.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("0")?"Belum Dikonfirmasi":"Sudah Dikonfirmasi");
+                    status_kepsek.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("2")?"Sudah Dikonfirmasi":"Belum Dikonfirmasi");
 
                     if(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")){
                         konfirmasi.setVisibility(View.GONE);

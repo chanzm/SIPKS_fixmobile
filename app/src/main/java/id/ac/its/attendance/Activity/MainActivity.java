@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import id.ac.its.attendance.R;
+import id.ac.its.attendance.Response.Attendance.ResponseApi;
 import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import id.ac.its.attendance.Retrofit.ServerAttendance.AccessToken;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         namabar = headerView.findViewById(R.id.nama_nav);
         sekolahbar = headerView.findViewById(R.id.textView);
         role = findViewById(R.id.jabatan);
+        sekolah = findViewById(R.id.sekolah);
 //        viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        setupViewPager(viewPager);
 
@@ -88,8 +90,13 @@ public class MainActivity extends AppCompatActivity
 //        setupTabIcons();
     }
 
+
     private void getList() {
         ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+
+//        final Call<ProfileResponse> profile = api.getprofile();
+//        if(getProfile().getRoleAkun().equals("1"))
+
         final Call<ResponsePengajuan> call = api.getpengajuan(0);
 
         call.enqueue(new Callback<ResponsePengajuan>() {
@@ -120,9 +127,9 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if(response.isSuccessful()){
                     ProfileResponse profileResponse = response.body();
-                    nama.setText(profileResponse.getProfile().getName());
-                    role.setText(profileResponse.getProfile().getRoleAkun().equals("1")?"Kepala Sekolah":"Bendahara Sekolah");
-                    
+                    nama.setText(response.body().getProfile().get(0).getName());
+                    role.setText(response.body().getProfile().get(0).getRoleAkun().equals("1")?"Kepala Sekolah":"Bendahara Sekolah");
+                    sekolah.setText(response.body().getProfile().get(0).getNamaSekolah());
                 }
             }
 
@@ -143,8 +150,8 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if(response.isSuccessful()){
                     ProfileResponse profileResponse = response.body();
-                    namabar.setText(profileResponse.getProfile().getName());
-//                    sekolahbar.setText(profileResponse.getProfile().getIdSekolah());
+                    namabar.setText(response.body().getProfile().get(0).getName());
+                    sekolahbar.setText(response.body().getProfile().get(0).getNamaSekolah());
 
                 }
             }

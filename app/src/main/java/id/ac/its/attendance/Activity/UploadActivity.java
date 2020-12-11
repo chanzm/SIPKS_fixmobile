@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -31,13 +32,14 @@ import retrofit2.Response;
 public class UploadActivity extends AppCompatActivity {
     private CameraView camerad;
     private CameraKitEventListener cameradListener;
-    private Button btn;
+    private Button btn,okcam;
     private TokenManager tokenManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        okcam = findViewById(R.id.okcam);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Upload Foto");
@@ -74,59 +76,68 @@ public class UploadActivity extends AppCompatActivity {
                 pDialog.setTitleText("Loading");
                 pDialog.show();
 
-                upload.enqueue(new Callback<ResponseApi>() {
+                okcam.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
-                        if (response.code() == 200 && !response.body().getMsg().equals("token_absent"))
-                        {
-                            pDialog.dismiss();
-                            new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Hasil")
-                                    .setContentText(response.body().getMsg())
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismiss();
-                                        }
-                                    }).show();
-                        }
-                        else
-                        {
-                            pDialog.dismiss();
-                            new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                    .setTitleText("Error")
-                                    .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
-                                    .setConfirmText("OK")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismiss();
-                                        }
-                                    }).show();
-                        }
+                    public void onClick(View v) {
+                        Intent intent = new Intent(UploadActivity.this, BerhasilActivity.class);
+                        startActivity(intent);
                     }
+                 });
 
-                    @Override
-                    public void onFailure(Call<ResponseApi> call, Throwable t) {
-                        pDialog.dismiss();
-                        new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText("Hasil")
-                                .setContentText("Internet Anda Bermasalah")
-                                .setConfirmText("OK")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismissWithAnimation();
-                                    }
-                                }).show();
-                    }
-                });
+//                upload.enqueue(new Callback<ResponseApi>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+//                        if (response.code() == 200 && !response.body().getMsg().equals("token_absent"))
+//                        {
+//                            pDialog.dismiss();
+//                            new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+//                                    .setTitleText("Hasil")
+//                                    .setContentText(response.body().getMsg())
+//                                    .setConfirmText("OK")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sDialog) {
+//                                            sDialog.dismiss();
+//                                        }
+//                                    }).show();
+//                        }
+//                        else
+//                        {
+//                            pDialog.dismiss();
+//                            new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.WARNING_TYPE)
+//                                    .setTitleText("Error")
+//                                    .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
+//                                    .setConfirmText("OK")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sDialog) {
+//                                            sDialog.dismiss();
+//                                        }
+//                                    }).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseApi> call, Throwable t) {
+//                        pDialog.dismiss();
+//                        new SweetAlertDialog(UploadActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                                .setTitleText("Hasil")
+//                                .setContentText("Internet Anda Bermasalah")
+//                                .setConfirmText("OK")
+//                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sDialog) {
+//                                        sDialog.dismissWithAnimation();
+//                                    }
+//                                }).show();
+//                    }
+//                });
             }
 
             @Override
             public void onVideo(CameraKitVideo cameraKitVideo) {
-
+                Intent intent = new Intent(UploadActivity.this, BerhasilActivity.class);
+                startActivity(intent);
             }
         };
 
@@ -138,6 +149,8 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 camerad.captureImage();
+                Intent intent = new Intent(UploadActivity.this, BerhasilActivity.class);
+                startActivity(intent);
             }
         });
     }

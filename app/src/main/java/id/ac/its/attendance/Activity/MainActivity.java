@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         call.enqueue(new Callback<ResponsePengajuan>() {
             @Override
             public void onResponse(Call<ResponsePengajuan> call, Response<ResponsePengajuan> response) {
-                Log.e("TAG", "onResponse: "+new Gson().toJson(response));
+                Log.e("testes", "onResponse: "+new Gson().toJson(response));
                 if(response.isSuccessful()){
                     ResponsePengajuan get = response.body();
                     adapter = new ListAdapter(MainActivity.this, get.getPengajuan());

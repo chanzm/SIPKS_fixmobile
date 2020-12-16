@@ -102,5 +102,5 @@ public interface ApiClientAttendance {
 
     @POST("pengajuan/detail")
     @FormUrlEncoded
-    Call<OKResponse> postdetailpengajuan(@Field("id") int id);
+    Call<OKResponse> postdetailpengajuan(@Field("id") int id, @Field("status") String status);
 }

@@ -118,7 +118,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
 //                }
 //            });
             ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-            Call<OKResponse> call = api.postdetailpengajuan(id);
+            Call<OKResponse> call = api.postdetailpengajuan(id,"1");
             call.enqueue(new Callback<OKResponse>() {
                 @Override
                 public void onResponse(Call<OKResponse> call, Response<OKResponse> response) {

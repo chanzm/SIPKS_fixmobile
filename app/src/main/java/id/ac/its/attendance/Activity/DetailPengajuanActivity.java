@@ -85,7 +85,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
 
                     if(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1") || response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")  ){
                         konfirmasi.setVisibility(View.GONE);
-                        tolak.setVisibility(View.GONE);
+                        tolakKonfirmasi.setVisibility(View.GONE);
 
                     }
                 }
@@ -111,27 +111,42 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                confirm.equals(3);
+
                 final SweetAlertDialog pDialog = new SweetAlertDialog(DetailPengajuanActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog.setTitleText("Loading");
                 pDialog.setCancelable(false);
                 pDialog.show();
+                ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+                Call<OKResponse> call = api.postdetailpengajuan(id,"3");
+                call.enqueue(new Callback<OKResponse>() {
+                    @Override
+                    public void onResponse(Call<OKResponse> call, Response<OKResponse> response) {
+                        if(response.isSuccessful()){
+                            pDialog.dismiss();
+                            new SweetAlertDialog(DetailPengajuanActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Hasil")
+                                    .setContentText("Berhasil Ditolak")
+                                    .setConfirmText("OK")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            sDialog.dismissWithAnimation();
+                                        }
+                                    }).show();
 
-                pDialog.dismiss();
-                new SweetAlertDialog(DetailPengajuanActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                        .setTitleText("Hasil")
-                        .setContentText("Berhasil Ditolak")
-                        .setConfirmText("OK")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismissWithAnimation();
-                            }
-                        }).show();
+                            Intent intent = new Intent(DetailPengajuanActivity.this, TolakActivity.class);
+                            intent.putExtra("id",id);
+                            startActivity(intent);
+                        }
+                    }
 
-                Intent intent = new Intent(DetailPengajuanActivity.this, TolakActivity.class);
-                intent.putExtra("id",id);
-                startActivity(intent);
+                    @Override
+                    public void onFailure(Call<OKResponse> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
     }

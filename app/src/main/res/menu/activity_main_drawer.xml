@@ -7,7 +7,12 @@
         <item
             android:id="@+id/nav_sudah"
             android:icon="@drawable/check"
-            android:title="Sudah Konfirmasi" />
+            android:title="Sudah Disetujui" />
+
+        <item
+            android:id="@+id/nav_tolak"
+            android:icon="@drawable/rejected"
+            android:title="Sudah Ditolak" />
     </group>
 
     <group android:id="@+id/nav_face_group" android:checkableBehavior="single">
@@ -45,7 +50,7 @@
     <group android:id="@+id/nav_logout" android:checkableBehavior="single">
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/signature"
+            android:icon="@drawable/logout"
             android:title="Logout" />
     </group>
 

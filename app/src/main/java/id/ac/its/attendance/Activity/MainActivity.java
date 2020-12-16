@@ -260,7 +260,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_sudah) {
             intent = new Intent(MainActivity.this, SudahActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_camera) {
+        } else if (id == R.id.nav_tolak) {
+            intent = new Intent(MainActivity.this, TolakActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_camera) {
             intent = new Intent(MainActivity.this, NewUploadActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_predict) {

@@ -29,7 +29,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
     private String confirm;
     private TokenManager tokenManager;
     private RecyclerView recyclerView;
-    private TextView judul,tanggal,total,nama_pengaju,jabatan,deskripsi,status_bend, status_kepsek;
+    private TextView judul,tanggal,total,nama_pengaju,jabatan,deskripsi,status_bend, status_kepsek, tolak;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         deskripsi = findViewById(R.id.deskripsi);
         status_bend = findViewById(R.id.status_pengajuan_bend);
         status_kepsek = findViewById(R.id.status_pengajuan);
+        tolak = findViewById(R.id.tolakKonfirmasi);
 
         if (confirm.equals("1")) {
             konfirmasi.setVisibility(View.GONE);
@@ -70,11 +71,19 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                     nama_pengaju.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
                     jabatan.setText(response.body().getDetailpeng().get(0).getJabatanPembuatPengajuan());
                     deskripsi.setText(response.body().getDetailpeng().get(0).getDeskripsiPengajuan());
-                    status_bend.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("0")?"Belum Dikonfirmasi":"Sudah Dikonfirmasi");
-                    status_kepsek.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("2")?"Sudah Dikonfirmasi":"Belum Dikonfirmasi");
+                    status_bend.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")?"Ditolak":
+                            (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")) ? "Sudah Dikonfirmasi" :
+                                    (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("2")) ? "Sudah Dikonfirmasi" : "Belum Dikonfirmasi");
 
-                    if(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")){
+                    status_kepsek.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")?"Ditolak":
+                            (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")) ? "Belum Dikonfirmasi" :
+                                    (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("2")) ? "Sudah Dikonfirmasi" : "Belum Dikonfirmasi");
+
+
+                    if(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1") || response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")  ){
                         konfirmasi.setVisibility(View.GONE);
+                        tolak.setVisibility(View.GONE);
+
                     }
                 }
             }
@@ -91,6 +100,13 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                 Intent intent = new Intent(DetailPengajuanActivity.this, UploadSignatureActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
+
+            }
+        });
+
+        tolak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });

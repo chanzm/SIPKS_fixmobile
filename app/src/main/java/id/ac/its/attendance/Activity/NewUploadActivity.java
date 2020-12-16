@@ -261,7 +261,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
         String myBase64Image = Constans.encodeToBase64(result, Bitmap.CompressFormat.JPEG, 100);
         ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
 
-        Call<ResponseApi> upload = api.kirim(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
+//        Call<ResponseApi> upload = api.kirim(Constans.getNip(), Constans.getPassword(), "data:image/jpeg;base64,"+myBase64Image);
 
         final SweetAlertDialog pDialog = new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -269,53 +269,53 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
         pDialog.setCancelable(false);
         pDialog.show();
 
-        upload.enqueue(new Callback<ResponseApi>() {
-            @Override
-            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
-                if (response.code() == 200) {
-                    pDialog.dismiss();
-                    new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText("Hasil")
-                            .setContentText(response.body().getMsg())
-                            .setConfirmText("OK")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                }
-                            }).show();
-                    STATE_NOW = 0;
-                } else {
-                    pDialog.dismiss();
-                    new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Error")
-                            .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
-                            .setConfirmText("OK")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                }
-                            }).show();
-                    STATE_NOW = 0;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseApi> call, Throwable t) {
-                STATE_NOW = 0;
-                pDialog.dismiss();
-                new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Hasil")
-                        .setContentText("Internet Anda Bermasalah")
-                        .setConfirmText("OK")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismissWithAnimation();
-                            }
-                        }).show();
-            }
-        });
+//        upload.enqueue(new Callback<ResponseApi>() {
+//            @Override
+//            public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+//                if (response.code() == 200) {
+//                    pDialog.dismiss();
+//                    new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+//                            .setTitleText("Hasil")
+//                            .setContentText(response.body().getMsg())
+//                            .setConfirmText("OK")
+//                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                @Override
+//                                public void onClick(SweetAlertDialog sDialog) {
+//                                    sDialog.dismiss();
+//                                }
+//                            }).show();
+//                    STATE_NOW = 0;
+//                } else {
+//                    pDialog.dismiss();
+//                    new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.WARNING_TYPE)
+//                            .setTitleText("Error")
+//                            .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
+//                            .setConfirmText("OK")
+//                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                @Override
+//                                public void onClick(SweetAlertDialog sDialog) {
+//                                    sDialog.dismiss();
+//                                }
+//                            }).show();
+//                    STATE_NOW = 0;
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseApi> call, Throwable t) {
+//                STATE_NOW = 0;
+//                pDialog.dismiss();
+//                new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                        .setTitleText("Hasil")
+//                        .setContentText("Internet Anda Bermasalah")
+//                        .setConfirmText("OK")
+//                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                            @Override
+//                            public void onClick(SweetAlertDialog sDialog) {
+//                                sDialog.dismissWithAnimation();
+//                            }
+//                        }).show();
+//            }
+//        });
     }
 }

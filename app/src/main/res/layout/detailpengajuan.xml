@@ -184,7 +184,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/item_list_detail"
-                android:layout_marginBottom="50dp">
+                android:layout_marginBottom="50dp"
+                >
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>
@@ -193,15 +194,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:id="@+id/konfirmasi_bendahara"
-        android:background="@color/colorPrimary">
+        android:orientation="horizontal"
+        android:id="@+id/konfirmasi_bendahara">
 
         <Button
             android:id="@+id/konfirmasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Konfirmasi"
+            android:text="Setujui"
             android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/tolakKonfirmasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tolak"
+            android:background="@color/red_btn_bg_pressed_color"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

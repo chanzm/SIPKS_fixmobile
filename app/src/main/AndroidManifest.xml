@@ -21,10 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon,android:theme"
-        >
-        <activity android:name=".Activity.SudahActivity"></activity>
-        <activity android:name=".Activity.DetailPengajuanActivity"></activity>
+        tools:replace="android:icon,android:theme">
+        <activity android:name=".Activity.TolakActivity"></activity>
+        <activity android:name=".Activity.SudahActivity" />
+        <activity android:name=".Activity.DetailPengajuanActivity" />
         <activity android:name=".Activity.TrainSignatureActivity" />
         <activity android:name=".Activity.PredictSignatureActivity" />
         <activity android:name=".Activity.UploadSignatureActivity" />

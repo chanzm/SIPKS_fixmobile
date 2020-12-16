@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Response.DetailPengajuan;
 
+import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class DetailPengajuan{
@@ -10,14 +11,8 @@ public class DetailPengajuan{
 	@SerializedName("nama_detail")
 	private String namaDetail;
 
-	@SerializedName("harga_satuan_detail")
-	private int hargaSatuanDetail;
-
 	@SerializedName("create_time")
 	private String createTime;
-
-	@SerializedName("jabatan_pembuat_pengajuan")
-	private String jabatanPembuatPengajuan;
 
 	@SerializedName("judul_pengajuan")
 	private String judulPengajuan;
@@ -28,14 +23,17 @@ public class DetailPengajuan{
 	@SerializedName("id_sekolah")
 	private int idSekolah;
 
-	@SerializedName("total_harga_detail")
-	private int totalHargaDetail;
-
 	@SerializedName("id_pengajuan")
 	private int idPengajuan;
 
 	@SerializedName("id_detail")
 	private int idDetail;
+
+	@SerializedName("harga_satuan")
+	private int hargaSatuan;
+
+	@SerializedName("satuan")
+	private String satuan;
 
 	@SerializedName("status_pengajuan")
 	private String statusPengajuan;
@@ -43,11 +41,20 @@ public class DetailPengajuan{
 	@SerializedName("nama_pembuat_pengajuan")
 	private String namaPembuatPengajuan;
 
+	@SerializedName("sub_total")
+	private int subTotal;
+
+	@SerializedName("create_time_pengajuan")
+	private String createTimePengajuan;
+
 	@SerializedName("id_akun")
 	private int idAkun;
 
 	@SerializedName("deskripsi_pengajuan")
 	private String deskripsiPengajuan;
+
+	@SerializedName("id_mapping_pengajuan_detail")
+	private int idMappingPengajuanDetail;
 
 	public int getJumlahPengajuan(){
 		return jumlahPengajuan;
@@ -57,16 +64,8 @@ public class DetailPengajuan{
 		return namaDetail;
 	}
 
-	public int getHargaSatuanDetail(){
-		return hargaSatuanDetail;
-	}
-
 	public String getCreateTime(){
 		return createTime;
-	}
-
-	public String getJabatanPembuatPengajuan(){
-		return jabatanPembuatPengajuan;
 	}
 
 	public String getJudulPengajuan(){
@@ -81,16 +80,20 @@ public class DetailPengajuan{
 		return idSekolah;
 	}
 
-	public int getTotalHargaDetail(){
-		return totalHargaDetail;
-	}
-
 	public int getIdPengajuan(){
 		return idPengajuan;
 	}
 
 	public int getIdDetail(){
 		return idDetail;
+	}
+
+	public int getHargaSatuan(){
+		return hargaSatuan;
+	}
+
+	public String getSatuan(){
+		return satuan;
 	}
 
 	public String getStatusPengajuan(){
@@ -101,11 +104,23 @@ public class DetailPengajuan{
 		return namaPembuatPengajuan;
 	}
 
+	public int getSubTotal(){
+		return subTotal;
+	}
+
+	public String getCreateTimePengajuan(){
+		return createTimePengajuan;
+	}
+
 	public int getIdAkun(){
 		return idAkun;
 	}
 
 	public String getDeskripsiPengajuan(){
 		return deskripsiPengajuan;
+	}
+
+	public int getIdMappingPengajuanDetail(){
+		return idMappingPengajuanDetail;
 	}
 }

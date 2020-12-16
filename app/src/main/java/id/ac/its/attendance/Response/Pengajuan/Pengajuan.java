@@ -10,7 +10,7 @@ public class Pengajuan{
 	@SerializedName("NIP_akun")
 	private String nIPAkun;
 
-	@SerializedName("create_time")
+	@SerializedName("create_time_pengajuan")
 	private String createTime;
 
 	@SerializedName("jabatan_pembuat_pengajuan")

@@ -1,6 +1,7 @@
 package id.ac.its.attendance.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import id.ac.its.attendance.R;
+import id.ac.its.attendance.Response.DetailPengajuan.DetailPengajuan;
 import id.ac.its.attendance.Response.DetailPengajuan.ResponseDetailPengajuan;
 import id.ac.its.attendance.Response.OKPengajuan.OKResponse;
 import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
@@ -25,7 +28,7 @@ import retrofit2.Response;
 
 public class DetailPengajuanActivity  extends AppCompatActivity {
     private int id;
-    private Button konfirmasi;
+    private Button konfirmasi,tolakKonfirmasi;
     private String confirm;
     private TokenManager tokenManager;
     private RecyclerView recyclerView;
@@ -42,6 +45,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         id = getIntent().getIntExtra("id",0);
         confirm = getIntent().getStringExtra("konfirmasi");
         konfirmasi = findViewById(R.id.konfirmasi);
+        tolakKonfirmasi = findViewById(R.id.tolakKonfirmasi);
         judul = findViewById(R.id.judul_pengajuan);
         tanggal = findViewById(R.id.tanggal);
         total = findViewById(R.id.total_pengajuan);
@@ -50,7 +54,6 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         deskripsi = findViewById(R.id.deskripsi);
         status_bend = findViewById(R.id.status_pengajuan_bend);
         status_kepsek = findViewById(R.id.status_pengajuan);
-        tolak = findViewById(R.id.tolakKonfirmasi);
 
         if (confirm.equals("1")) {
             konfirmasi.setVisibility(View.GONE);
@@ -69,7 +72,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                     tanggal.setText(response.body().getDetailpeng().get(0).getCreateTime());
                     total.setText(String.valueOf(response.body().getDetailpeng().get(0).getJumlahPengajuan()));
                     nama_pengaju.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
-                    jabatan.setText(response.body().getDetailpeng().get(0).getJabatanPembuatPengajuan());
+                    jabatan.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
                     deskripsi.setText(response.body().getDetailpeng().get(0).getDeskripsiPengajuan());
                     status_bend.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")?"Ditolak":
                             (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")) ? "Sudah Dikonfirmasi" :
@@ -104,10 +107,31 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
             }
         });
 
-        tolak.setOnClickListener(new View.OnClickListener() {
+        tolakKonfirmasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                confirm.equals(3);
+                final SweetAlertDialog pDialog = new SweetAlertDialog(DetailPengajuanActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Loading");
+                pDialog.setCancelable(false);
+                pDialog.show();
 
+                pDialog.dismiss();
+                new SweetAlertDialog(DetailPengajuanActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Hasil")
+                        .setContentText("Berhasil Ditolak")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                            }
+                        }).show();
+
+                Intent intent = new Intent(DetailPengajuanActivity.this, TolakActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
     }

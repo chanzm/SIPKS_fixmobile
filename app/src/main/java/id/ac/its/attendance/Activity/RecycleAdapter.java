@@ -48,9 +48,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.AdapterH
     public void onBindViewHolder(@NonNull final RecycleAdapter.AdapterHolder holder, int position) {
         final DetailPengajuan detailPengajuan = dataList.get(position);
         String title = detailPengajuan.getNamaDetail();
-        int satuan = detailPengajuan.getHargaSatuanDetail();
+        int satuan = detailPengajuan.getHargaSatuan();
         int jumlah = detailPengajuan.getJumlahDetail();
-        int total =  detailPengajuan.getTotalHargaDetail();
+        int total =  detailPengajuan.getSubTotal();
 
 
         holder.judul.setText(title);

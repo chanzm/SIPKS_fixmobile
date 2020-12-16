@@ -42,9 +42,9 @@ public class ListAdapterDetail extends RecyclerView.Adapter<ListAdapterDetail.Ad
     public void onBindViewHolder(@NonNull final ListAdapterDetail.AdapterHolder holder, int position) {
         final DetailPengajuan detailpengajuan = dataList.get(position);
         String nama_detail = detailpengajuan.getNamaDetail();
-        int hargasatu = detailpengajuan.getHargaSatuanDetail();
+        int hargasatu = detailpengajuan.getHargaSatuan();
         int jumlah = detailpengajuan.getJumlahDetail();
-        int total_harga = detailpengajuan.getTotalHargaDetail();
+        int total_harga = detailpengajuan.getSubTotal();
 
         holder.nama.setText(nama_detail);
         holder.hargasatu.setText(String.valueOf(hargasatu));

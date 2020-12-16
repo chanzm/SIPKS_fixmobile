@@ -88,7 +88,7 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                        Intent intent = new Intent(UploadActivity.this, BerhasilActivity.class);
 //                        startActivity(intent);
-                uploadFoto(base64Encode);
+//                uploadFoto(base64Encode);
 
             }
         });
@@ -254,56 +254,56 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
-    private void uploadFoto(String base64) {
-        if(base64 == null) {
-//            Toast.makeText(getBaseContext(), "ADA ISINYA", Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), "Belum Ada Foto", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Log.d("CEKISI", base64);
-//            String tes = "nyobak";
-            //            Do Retrofit HERE
-            mAPIService.kirim(base64).enqueue(new Callback<UploadWajahResponse>() {
-                @Override
-                public void onResponse(Call<UploadWajahResponse> call, Response<UploadWajahResponse> response) {
-                    if(response.isSuccessful()) {
-                        Toast.makeText(getBaseContext(), "Foto Berhasil Dikirim ke API " + response.body().toString(), Toast.LENGTH_LONG).show();
-                        Log.i("POST BERHASIL", "Foto Berhasil Terupload melalui API " + response.body().toString());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UploadWajahResponse> call, Throwable t) {
-                    Log.d("Call", String.valueOf(call));
-                    Log.d("Throwable", String.valueOf(t));
-                    if (t instanceof SocketTimeoutException)
-                    {
-                        // "Connection Timeout";
-                        Log.d("SocketTimeoutException", "SocketTimeoutException Error");
-                    }
-                    else if (t instanceof IOException)
-                    {
-                        // "Timeout";
-                        Log.d("TIMEOUT", "IOException Error");
-                    }
-                    else
-                    {
-                        //Call was cancelled by user
-                        if(call.isCanceled())
-                        {
-                            Log.d("CANCELED", "Call was cancelled forcefully");
-                        }
-                        else
-                        {
-                            //Generic error handling
-                            Log.d("GENERIC" ,"Network Error :: " + t.getLocalizedMessage());
-                        }
-                    }
-                    Toast.makeText(getBaseContext(), "Gagal Mengirim Foto", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
+//    private void uploadFoto(String base64) {
+//        if(base64 == null) {
+////            Toast.makeText(getBaseContext(), "ADA ISINYA", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Belum Ada Foto", Toast.LENGTH_LONG).show();
+//        }
+//        else {
+//            Log.d("CEKISI", base64);
+////            String tes = "nyobak";
+//            //            Do Retrofit HERE
+//            mAPIService.kirim(base64).enqueue(new Callback<UploadWajahResponse>() {
+//                @Override
+//                public void onResponse(Call<UploadWajahResponse> call, Response<UploadWajahResponse> response) {
+//                    if(response.isSuccessful()) {
+//                        Toast.makeText(getBaseContext(), "Foto Berhasil Dikirim ke API " + response.body().toString(), Toast.LENGTH_LONG).show();
+//                        Log.i("POST BERHASIL", "Foto Berhasil Terupload melalui API " + response.body().toString());
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<UploadWajahResponse> call, Throwable t) {
+//                    Log.d("Call", String.valueOf(call));
+//                    Log.d("Throwable", String.valueOf(t));
+//                    if (t instanceof SocketTimeoutException)
+//                    {
+//                        // "Connection Timeout";
+//                        Log.d("SocketTimeoutException", "SocketTimeoutException Error");
+//                    }
+//                    else if (t instanceof IOException)
+//                    {
+//                        // "Timeout";
+//                        Log.d("TIMEOUT", "IOException Error");
+//                    }
+//                    else
+//                    {
+//                        //Call was cancelled by user
+//                        if(call.isCanceled())
+//                        {
+//                            Log.d("CANCELED", "Call was cancelled forcefully");
+//                        }
+//                        else
+//                        {
+//                            //Generic error handling
+//                            Log.d("GENERIC" ,"Network Error :: " + t.getLocalizedMessage());
+//                        }
+//                    }
+//                    Toast.makeText(getBaseContext(), "Gagal Mengirim Foto", Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    }
 
     @Override
     protected void onResume() {

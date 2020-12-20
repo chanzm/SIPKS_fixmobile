@@ -32,14 +32,14 @@ public interface ApiClientAttendance {
     @POST("sendsignature")
     Call<ResponseApi> sendSignature(@Part MultipartBody.Part body);
 
-//    @FormUrlEncoded
-//    @POST("/doTrain/")
-//    Call<ResponseApi> train(@Field("idUser") String nrp,
-//                            @Field("password") String password);
-//    @FormUrlEncoded
-//    @POST("/doTrain_TTD/")
-//    Call<ResponseApi> trainTTD(@Field("idUser") String nrp,
-//                               @Field("password") String password);
+    @FormUrlEncoded
+    @POST("/doTrain/")
+    Call<ResponseApi> train(@Field("idUser") String nrp,
+                            @Field("password") String password);
+    @FormUrlEncoded
+    @POST("/doTrain_TTD/")
+    Call<ResponseApi> trainTTD(@Field("idUser") String nrp,
+                               @Field("password") String password);
 
     @Multipart
     @POST("predictsignature")

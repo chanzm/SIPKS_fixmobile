@@ -10,12 +10,15 @@ import id.ac.its.attendance.Response.OKPengajuan.OKResponse;
 import id.ac.its.attendance.Response.Pengajuan.Pengajuan;
 import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -25,25 +28,23 @@ public interface ApiClientAttendance {
     Call<ResponseApi> kirim(@Field("idUser") String nrp,
                             @Field("password") String password,
                             @Field("image") String image);
-    @FormUrlEncoded
-    @POST("/sendSignature/")
-    Call<ResponseApi> sendSignature(@Field("idUser") String nrp,
-                                    @Field("password") String password,
-                                    @Field("image") String image);
-    @FormUrlEncoded
-    @POST("/doTrain/")
-    Call<ResponseApi> train(@Field("idUser") String nrp,
-                            @Field("password") String password);
-    @FormUrlEncoded
-    @POST("/doTrain_TTD/")
-    Call<ResponseApi> trainTTD(@Field("idUser") String nrp,
-                               @Field("password") String password);
+    @Multipart
+    @POST("sendsignature")
+    Call<ResponseApi> sendSignature(@Part MultipartBody.Part body);
 
-    @FormUrlEncoded
-    @POST("/doPredict_TTD/")
-    Call<ResponseApi> predictTTD(@Field("idUser") String nrp,
-                                 @Field("password") String password,
-                                 @Field("image") String image);
+//    @FormUrlEncoded
+//    @POST("/doTrain/")
+//    Call<ResponseApi> train(@Field("idUser") String nrp,
+//                            @Field("password") String password);
+//    @FormUrlEncoded
+//    @POST("/doTrain_TTD/")
+//    Call<ResponseApi> trainTTD(@Field("idUser") String nrp,
+//                               @Field("password") String password);
+
+    @Multipart
+    @POST("predictsignature")
+    Call<ResponseApi> predictTTD(@Part MultipartBody.Part body);
+
     @FormUrlEncoded
     @POST("/doPredict/")
     Call<ResponseApi> predict(@Field("idUser") String nrp,

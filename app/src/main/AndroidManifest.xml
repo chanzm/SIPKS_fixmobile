@@ -27,7 +27,6 @@
         <activity android:name=".Activity.DetailPengajuanActivity" />
         <activity android:name=".Activity.TrainSignatureActivity" />
         <activity android:name=".Activity.PredictSignatureActivity" />
-        <activity android:name=".Activity.UploadSignatureActivity" />
         <activity android:name=".Activity.NewUploadActivity" />
         <activity android:name=".Activity.NewPredictActivity" />
         <activity

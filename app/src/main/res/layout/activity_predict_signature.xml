@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="id.ac.its.attendance.Activity.PredictSignatureActivity">
+    tools:context="id.ac.its.attendance.Activity.PredictSignatureActivityy">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

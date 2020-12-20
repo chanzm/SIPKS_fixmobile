@@ -3,18 +3,14 @@ package id.ac.its.attendance.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +41,6 @@ import id.ac.its.attendance.Utility.PermissionsDelegate;
 
 //import org.jetbrains.annotations;
 
-import java.io.File;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;

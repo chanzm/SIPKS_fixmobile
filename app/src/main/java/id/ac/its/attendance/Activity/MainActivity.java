@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import id.ac.its.attendance.R;
+import id.ac.its.attendance.Response.DetailPengajuan.DetailPengajuan;
 import id.ac.its.attendance.Response.Pengajuan.ResponsePengajuan;
 import id.ac.its.attendance.Response.Profile.ProfileResponse;
 import id.ac.its.attendance.Retrofit.ServerAttendance.ApiClientAttendance;
@@ -270,8 +271,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_training) {
             intent = new Intent(MainActivity.this,TrainActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_upload_signature) {
-            intent = new Intent(MainActivity.this, PredictSignatureActivity.class);
+        } else if(id==R.id.nav_upload_signature) {
+            intent = new Intent(MainActivity.this, UploadSignatureActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_training_signature) {
             intent = new Intent(MainActivity.this, TrainSignatureActivity.class);

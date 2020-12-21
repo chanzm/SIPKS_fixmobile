@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PredictSignatureActivity extends AppCompatActivity {
+public class UploadSignatureActivity extends AppCompatActivity {
 
     private SignaturePad mSignaturePad;
     private Button mClearButton, mSaveButton;
@@ -43,7 +43,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_predict_signature);
+        setContentView(R.layout.activity_upload_signature);
         id = getIntent().getIntExtra("id",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -119,10 +119,10 @@ public class PredictSignatureActivity extends AppCompatActivity {
 
                 tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
                 ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-                Call<ResponseApi> upload = api.predictTTD(body);
+                Call<ResponseApi> upload = api.sendSignature(body);
 
 
-                final SweetAlertDialog pDialog = new SweetAlertDialog(PredictSignatureActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                final SweetAlertDialog pDialog = new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog.setTitleText("Loading");
                 pDialog.setCancelable(false);
@@ -134,7 +134,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
                         if(response.code() == 200) {
                             pDialog.dismiss();
-                            new SweetAlertDialog(PredictSignatureActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Hasil")
                                     .setContentText("Berhasil")
                                     .setConfirmText("OK")
@@ -146,13 +146,13 @@ public class PredictSignatureActivity extends AppCompatActivity {
                                     }).show();
 
                             mSignaturePad.clear();
-                            Intent intent = new Intent(PredictSignatureActivity.this, NewPredictActivity.class);
+                            Intent intent = new Intent(UploadSignatureActivity.this, NewPredictActivity.class);
                             intent.putExtra("id",id);
                             startActivity(intent);
                         } else {
                             pDialog.dismiss();
                             Log.w("testes",response.raw().toString());
-                            new SweetAlertDialog(PredictSignatureActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText("Error")
                                     .setContentText("Terjadi kesalahan, mohon ulangi lagi.")
                                     .setConfirmText("OK")
@@ -168,7 +168,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseApi> call, Throwable t) {
                         pDialog.dismiss();
-                        new SweetAlertDialog(PredictSignatureActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Hasil")
                                 .setContentText("Internet Anda Bermasalah")
                                 .setConfirmText("OK")

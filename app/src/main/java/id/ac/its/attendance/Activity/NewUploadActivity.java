@@ -89,7 +89,7 @@ public class NewUploadActivity extends AppCompatActivity implements FrameProcess
         capture = findViewById(R.id.btn_capture);
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
 
-        txtDetected = findViewById(R.id.txtDetected);
+//        txtDetected = findViewById(R.id.txtDetected);
         okcam = findViewById(R.id.okcam);
 
         cameraView.setFacing(Facing.FRONT);

@@ -309,7 +309,7 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
     }
 
     private void gotoSignature() {
-        Intent intent = new Intent(NewPredictActivity.this, PredictSignatureActivity.class);
+        Intent intent = new Intent(NewPredictActivity.this, UploadSignatureActivity.class);
         intent.putExtra("cmd", "absen");
         intent.putExtra("latitude", latitude);
         intent.putExtra("longitude", longitude);

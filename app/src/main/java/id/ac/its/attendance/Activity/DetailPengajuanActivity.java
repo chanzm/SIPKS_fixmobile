@@ -47,7 +47,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         tanggal = findViewById(R.id.tanggal);
         total = findViewById(R.id.total_pengajuan);
         nama_pengaju = findViewById(R.id.nama_pengaju);
-        jabatan = findViewById(R.id.jabatan_pengaju);
+//        jabatan = findViewById(R.id.jabatan_pengaju);
         deskripsi = findViewById(R.id.deskripsi);
         status_bend = findViewById(R.id.status_pengajuan_bend);
         status_kepsek = findViewById(R.id.status_pengajuan);
@@ -69,7 +69,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                     tanggal.setText(response.body().getDetailpeng().get(0).getCreateTime());
                     total.setText(String.valueOf(response.body().getDetailpeng().get(0).getJumlahPengajuan()));
                     nama_pengaju.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
-                    jabatan.setText(response.body().getDetailpeng().get(0).getNamaPembuatPengajuan());
+//                    jabatan.setText(response.body().getDetailpeng().get(0).get);
                     deskripsi.setText(response.body().getDetailpeng().get(0).getDeskripsiPengajuan());
                     status_bend.setText(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")?"Ditolak":
                             (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1")) ? "Sudah Dikonfirmasi" :
@@ -97,7 +97,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //              Log.w("lalalayeye",response.body().getStatus());
-                Intent intent = new Intent(DetailPengajuanActivity.this, PredictSignatureActivity.class);
+                Intent intent = new Intent(DetailPengajuanActivity.this, UploadSignatureActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
 

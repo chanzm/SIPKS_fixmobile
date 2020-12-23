@@ -259,28 +259,28 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_sudah) {
             intent = new Intent(MainActivity.this, SudahActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_tolak) {
+        } if (id == R.id.nav_tolak) {
             intent = new Intent(MainActivity.this, TolakActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_camera) {
+        } if (id == R.id.nav_camera) {
             intent = new Intent(MainActivity.this, NewUploadActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_predict) {
+        } if (id == R.id.nav_predict) {
             intent = new Intent(MainActivity.this, NewPredictActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_training) {
+        } if (id == R.id.nav_training) {
             intent = new Intent(MainActivity.this,TrainActivity.class);
             startActivity(intent);
-        } else if(id==R.id.nav_upload_signature) {
-            intent = new Intent(MainActivity.this, UploadSignatureActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_training_signature) {
+        } if (id == R.id.nav_training_signature) {
             intent = new Intent(MainActivity.this, TrainSignatureActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_predict_signature) {
-            intent = new Intent(MainActivity.this, PredictSignatureActivity.class);
+        } if (id == R.id.nav_signature_upload) {
+            intent = new Intent(MainActivity.this, UploadSignatureActivity.class);
             startActivity(intent);
-        } else if(id== R.id.logout){
+        } if (id == R.id.nav_predict_signature) {
+            intent = new Intent(MainActivity.this, TolakActivity.class);
+            startActivity(intent);
+        } if(id== R.id.logout){
             Log.w("tesmasuk","bebas");
             this.onBackPressed();
         }

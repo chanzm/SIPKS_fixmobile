@@ -32,7 +32,7 @@
 
     <group android:id="@+id/nav_signature_group" android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_upload_signature"
+            android:id="@+id/nav_signature_upload"
             android:icon="@drawable/signature"
             android:title="Upload Signature" />
 

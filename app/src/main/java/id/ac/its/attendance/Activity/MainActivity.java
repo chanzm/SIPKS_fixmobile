@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, UploadSignatureActivity.class);
             startActivity(intent);
         } if (id == R.id.nav_predict_signature) {
-            intent = new Intent(MainActivity.this, TolakActivity.class);
+            intent = new Intent(MainActivity.this, PredictSignatureActivity.class);
             startActivity(intent);
         } if(id== R.id.logout){
             Log.w("tesmasuk","bebas");

@@ -28,6 +28,11 @@ public interface ApiClientAttendance {
     Call<ResponseApi> kirim(@Field("idUser") String nrp,
                             @Field("password") String password,
                             @Field("image") String image);
+
+    @Multipart
+    @POST("sendface")
+    Call<ResponseApi> sendface(@Part MultipartBody.Part body);
+
     @Multipart
     @POST("sendsignature")
     Call<ResponseApi> sendSignature(@Part MultipartBody.Part body);

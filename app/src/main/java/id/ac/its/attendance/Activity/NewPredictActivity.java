@@ -70,11 +70,13 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
     private float LEFT_EYE_CLOSE_PROB = 0.15F;
     private float RIGHT_EYE_CLOSE_PROB = 0.15F;
     private float SMILING_PROB = 0.80F;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_predicty);
+        id = getIntent().getIntExtra("id",0);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

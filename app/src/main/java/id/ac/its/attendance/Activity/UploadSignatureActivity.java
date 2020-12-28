@@ -136,7 +136,7 @@ public class UploadSignatureActivity extends AppCompatActivity {
                             pDialog.dismiss();
                             new SweetAlertDialog(UploadSignatureActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Hasil")
-                                    .setContentText("Berhasil Di Upload")
+                                    .setContentText(response.body().getMsg())
                                     .setConfirmText("OK")
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
@@ -146,9 +146,18 @@ public class UploadSignatureActivity extends AppCompatActivity {
                                     }).show();
 
                             mSignaturePad.clear();
-                            Intent intent = new Intent(UploadSignatureActivity.this, MainActivity.class);
-                            intent.putExtra("id",id);
-                            startActivity(intent);
+                            if(id != 0)
+                            {
+                                Intent intent = new Intent(UploadSignatureActivity.this, NewPredictActivity.class);
+                                intent.putExtra("id",id);
+                                startActivity(intent);
+                            }
+
+                            if(response.body().getMsg().equals("Upload Signature Selesai, Data Tersimpan")){
+                                Intent intent = new Intent(UploadSignatureActivity.this, TrainSignatureActivity.class);
+                                startActivity(intent);
+                            }
+
                         } else {
                             pDialog.dismiss();
                             Log.w("testes",response.raw().toString());

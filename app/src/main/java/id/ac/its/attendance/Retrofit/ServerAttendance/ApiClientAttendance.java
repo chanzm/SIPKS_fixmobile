@@ -41,10 +41,9 @@ public interface ApiClientAttendance {
     @POST("/doTrain/")
     Call<ResponseApi> train(@Field("idUser") String nrp,
                             @Field("password") String password);
-    @FormUrlEncoded
-    @POST("/doTrain_TTD/")
-    Call<ResponseApi> trainTTD(@Field("idUser") String nrp,
-                               @Field("password") String password);
+
+    @GET("trainsignature")
+    Call<ResponseApi> trainTTD();
 
     @Multipart
     @POST("predictsignature")

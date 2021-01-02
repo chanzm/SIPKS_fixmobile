@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -46,7 +48,7 @@ public class TrainSignatureActivity extends AppCompatActivity {
 
                 tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
                 ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
-                Call<ResponseApi> train = api.trainTTD(Constans.getNip(), Constans.getPassword());
+                Call<ResponseApi> train = api.trainTTD();
 
                 final SweetAlertDialog pDialog = new SweetAlertDialog(TrainSignatureActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -101,7 +103,7 @@ public class TrainSignatureActivity extends AppCompatActivity {
                                         sDialog.dismissWithAnimation();
                                     }
                                 }).show();
-
+                        Log.w("apaya", "onFailure: ",t);
                     }
                 });
             }

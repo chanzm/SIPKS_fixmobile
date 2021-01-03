@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerAttendance {
 
-    public final static String BASE_URL = "http://192.168.1.4/sipks/public/api/"; // API laptop server
+    public final static String BASE_URL = "http://192.168.1.10/sipks/public/api/"; // API laptop server
 //    private final static String API_BASE_URL = BASE_URL+"api/v1/";
 
     private final static OkHttpClient client = buildClient();
@@ -42,7 +42,10 @@ public class ServerAttendance {
                         return chain.proceed(request);
                     }
                 });
-        return builder.build();
+        return builder.connectTimeout(5, TimeUnit.MINUTES) // connect timeout
+                .writeTimeout(5, TimeUnit.MINUTES) // write timeout
+                .readTimeout(5, TimeUnit.MINUTES).build();
+
     }
 
     private static Retrofit buildRetrofit(OkHttpClient client){

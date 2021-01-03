@@ -97,7 +97,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //              Log.w("lalalayeye",response.body().getStatus());
-                Intent intent = new Intent(DetailPengajuanActivity.this, UploadSignatureActivity.class);
+                Intent intent = new Intent(DetailPengajuanActivity.this, PredictSignatureActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
 

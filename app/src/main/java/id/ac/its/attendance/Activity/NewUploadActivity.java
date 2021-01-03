@@ -163,26 +163,27 @@ public class NewUploadActivity extends AppCompatActivity {
                             if(response.isSuccessful()){
                                 //intent berhasil
 //                        pDialog.dismiss();
-//                        new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-//                                .setTitleText("Hasil")
-//                                .setContentText("Berhasil")
-//                                .setConfirmText("OK")
-//                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                                    @Override
-//                                    public void onClick(SweetAlertDialog sDialog) {
-//                                        sDialog.dismissWithAnimation();
-//                                    }
-//                                }).show();
-                                okcam.setOnClickListener(new View.OnClickListener() {
+                        new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Hasil")
+                                .setContentText(response.body().getMsg())
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
-                                    public void onClick(View v) {
-//                                Log.w("lalalayeye",call.body().getStatus());
-                                        Intent intent = new Intent(NewUploadActivity.this, TrainActivity.class);
-                                        intent.putExtra("id",id);
-                                        startActivity(intent);
-
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog.dismissWithAnimation();
                                     }
-                                });
+                                }).show();
+
+                                Log.w("lalalayeye",response.body().getMsg());
+
+                                        if(response.body().getMsg() != null && response.body().getMsg().equals("Upload Wajah Selesai, Data Tersimpan")){
+                                            Intent intent = new Intent(NewUploadActivity.this, TrainActivity.class);
+                                            startActivity(intent);
+                                        }
+//                                        Intent intent = new Intent(NewUploadActivity.this, TrainActivity.class);
+//                                        intent.putExtra("id",id);
+//                                        startActivity(intent);
+
 
                             }
                         }

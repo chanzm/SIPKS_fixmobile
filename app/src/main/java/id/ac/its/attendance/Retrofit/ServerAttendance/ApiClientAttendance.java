@@ -37,10 +37,8 @@ public interface ApiClientAttendance {
     @POST("sendsignature")
     Call<ResponseApi> sendSignature(@Part MultipartBody.Part body);
 
-    @FormUrlEncoded
-    @POST("/doTrain/")
-    Call<ResponseApi> train(@Field("idUser") String nrp,
-                            @Field("password") String password);
+    @GET("trainface")
+    Call<ResponseApi> trainface();
 
     @GET("trainsignature")
     Call<ResponseApi> trainTTD();

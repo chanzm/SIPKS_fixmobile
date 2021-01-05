@@ -56,6 +56,9 @@ public class DetailPengajuan{
 	@SerializedName("id_mapping_pengajuan_detail")
 	private int idMappingPengajuanDetail;
 
+	@SerializedName("msg")
+	private String msg;
+
 	public int getJumlahPengajuan(){
 		return jumlahPengajuan;
 	}
@@ -122,5 +125,9 @@ public class DetailPengajuan{
 
 	public int getIdMappingPengajuanDetail(){
 		return idMappingPengajuanDetail;
+	}
+
+	public String getMsg(){
+		return msg;
 	}
 }

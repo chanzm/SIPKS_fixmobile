@@ -52,9 +52,9 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
         status_bend = findViewById(R.id.status_pengajuan_bend);
         status_kepsek = findViewById(R.id.status_pengajuan);
 
-        if (confirm.equals("1")) {
-            konfirmasi.setVisibility(View.GONE);
-        }
+//        if (confirm.equals("1")) {
+//            konfirmasi.setVisibility(View.GONE);
+//        }
 
         final ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
         final Call<ResponseDetailPengajuan> call = api.getdetailpengajuan(id);
@@ -80,11 +80,13 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                                     (response.body().getDetailpeng().get(0).getStatusPengajuan().equals("2")) ? "Sudah Dikonfirmasi" : "Belum Dikonfirmasi");
 
 
-                    if(response.body().getDetailpeng().get(0).getStatusPengajuan().equals("1") || response.body().getDetailpeng().get(0).getStatusPengajuan().equals("3")  ){
+                    if(response.body().getDetailpeng().get(0).getMsg().equals("0")){
                         konfirmasi.setVisibility(View.GONE);
                         tolakKonfirmasi.setVisibility(View.GONE);
-
                     }
+//                    else if(response.body().getDetailpeng().get(0).getMsg().equals("1")){
+//
+//                    }
                 }
             }
 

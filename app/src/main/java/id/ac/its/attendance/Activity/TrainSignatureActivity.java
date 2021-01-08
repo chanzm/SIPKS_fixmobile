@@ -53,7 +53,7 @@ public class TrainSignatureActivity extends AppCompatActivity {
                 final SweetAlertDialog pDialog = new SweetAlertDialog(TrainSignatureActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog.setTitleText("Loading");
-                pDialog.setContentText("Training Signature: " + Constans.getNip());
+                pDialog.setContentText("Training Signature.. ");
                 pDialog.setCancelable(false);
                 pDialog.show();
 

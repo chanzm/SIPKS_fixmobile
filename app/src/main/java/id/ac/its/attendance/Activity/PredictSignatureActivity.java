@@ -135,8 +135,8 @@ public class PredictSignatureActivity extends AppCompatActivity {
                         if(response.code() == 200) {
                             pDialog.dismiss();
                             new SweetAlertDialog(PredictSignatureActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Hasil")
-                                    .setContentText("Berhasil")
+                                    .setTitleText("Tanda tangan cocok")
+                                    .setContentText("Berhasil Dikonfirmasi")
                                     .setConfirmText("OK")
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override

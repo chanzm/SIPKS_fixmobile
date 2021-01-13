@@ -134,7 +134,7 @@ public class DetailPengajuanActivity  extends AppCompatActivity {
                                         }
                                     }).show();
 
-                            Intent intent = new Intent(DetailPengajuanActivity.this, TolakActivity.class);
+                            Intent intent = new Intent(DetailPengajuanActivity.this, MainActivity.class);
                             intent.putExtra("id",id);
                             startActivity(intent);
                         }

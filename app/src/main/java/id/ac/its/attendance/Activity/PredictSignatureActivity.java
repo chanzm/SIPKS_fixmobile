@@ -142,6 +142,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(SweetAlertDialog sDialog) {
                                             sDialog.dismissWithAnimation();
+
                                         }
                                     }).show();
 

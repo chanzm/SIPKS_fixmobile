@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,6 +72,9 @@ public class TrainSignatureActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(SweetAlertDialog sDialog) {
                                             sDialog.dismissWithAnimation();
+                                            Intent intent = new Intent(TrainSignatureActivity.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                            startActivity(intent);
                                         }
                                     }).show();
                         }

@@ -34,6 +34,10 @@ public interface ApiClientAttendance {
     Call<ResponseApi> sendface(@Part MultipartBody.Part body);
 
     @Multipart
+    @POST("predictface")
+    Call<ResponseApi> predictface(@Part MultipartBody.Part body, @Part("id") int id);
+
+    @Multipart
     @POST("sendsignature")
     Call<ResponseApi> sendSignature(@Part MultipartBody.Part body);
 

@@ -45,7 +45,7 @@ public class PredictSignatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_predict_signature);
         id = getIntent().getIntExtra("id",0);
-
+        Log.w("id", String.valueOf(id));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Upload Signature");

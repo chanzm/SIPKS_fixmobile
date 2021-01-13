@@ -1,5 +1,6 @@
 package id.ac.its.attendance.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -41,23 +42,31 @@ import id.ac.its.attendance.Utility.PermissionsDelegate;
 
 //import org.jetbrains.annotations;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 
-public class NewPredictActivity extends AppCompatActivity implements FrameProcessor {
+public class NewPredictActivity extends AppCompatActivity {
     private static final String LOGGING_TAG = "New Upload Activity";
     private static final String TAG = "PredictActivity";
 
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
     private boolean hasCameraPermission;
     private CameraView cameraView;
-    private Button capture;
+    private Button capture, okcam;
     private TextView txtDetected;
     private TokenManager tokenManager;
 
@@ -78,18 +87,19 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
         setContentView(R.layout.activity_predicty);
         id = getIntent().getIntExtra("id",0);
 
+        Log.w("id predict", String.valueOf(id));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         cameraView = findViewById(R.id.camera_view);
-        capture = findViewById(R.id.btn_capture);
+        okcam = findViewById(R.id.okcam);
         hasCameraPermission = permissionsDelegate.hasCameraPermission();
 
         txtDetected = findViewById(R.id.txtDetected);
 
         cameraView.setFacing(Facing.FRONT);
         cameraView.setLifecycleOwner(this);
-        cameraView.addFrameProcessor(this);
+//        cameraView.addFrameProcessor(this);
         cameraView.addCameraListener(new CamListener());
 
         if (hasCameraPermission) {
@@ -97,99 +107,186 @@ public class NewPredictActivity extends AppCompatActivity implements FrameProces
         } else {
             permissionsDelegate.requestCameraPermission();
         }
+        okcam.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                    cameraView.takePicture();
+            }
+        });
     }
 
-    @Override
-    public void process(@NonNull Frame frame) {
-        int height = frame.getSize().getHeight();
-        int width = frame.getSize().getWidth();
-
-        FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
-                .setHeight(height)
-                .setWidth(width)
-                .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_YV12)
-                .setRotation((cameraView.getFacing() == Facing.FRONT) ? FirebaseVisionImageMetadata.ROTATION_270 : FirebaseVisionImageMetadata.ROTATION_90)
-                .build();
-        byte[] frameData = frame.getData();
-        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromByteArray(frameData, metadata);
-        FirebaseVisionFaceDetectorOptions options = new FirebaseVisionFaceDetectorOptions.Builder()
-                .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
-                .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
-                .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-                .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
-                .build();
-
-        FirebaseVisionFaceDetector faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(options);
-        try {
-            Tasks.await(faceDetector.detectInImage(firebaseVisionImage)
-                    .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>() {
-                        @Override
-                        public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
-                            if(firebaseVisionFaces.size() == 1){
-                                txtDetected.setText("Wajah terdeteksi");
-                                for (FirebaseVisionFace face : firebaseVisionFaces){
-                                    Log.w(TAG, "left : " + face.getLeftEyeOpenProbability() + " right : " + face.getRightEyeOpenProbability());
-                                    if(face.getLeftEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
-                                            face.getRightEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
-                                            face.getLeftEyeOpenProbability() <= LEFT_EYE_CLOSE_PROB &&
-                                            face.getRightEyeOpenProbability() <= RIGHT_EYE_CLOSE_PROB &&
-                                            face.getSmilingProbability() > SMILING_PROB){
-
-                                        Log.w(TAG, "TUTUP");
-                                        if(STATE_NOW == 0){
-                                            STATE_NOW = STATE_BLINK_PERTAMA;
-                                        }
-                                    }
-                                    else if(face.getLeftEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
-                                            face.getRightEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
-                                            face.getSmilingProbability() > SMILING_PROB){
-                                        Log.w(TAG, "Buka");
-                                        if(STATE_NOW == STATE_BLINK_PERTAMA){
-                                            STATE_NOW = STATE_BLINK_KEDUA;
-                                            Thread thread = new Thread();
-                                            try{
-                                                thread.sleep(100);
-                                            }catch (Exception e){
-                                                Log.w(TAG, e.getMessage());
-                                            }
-                                            cameraView.takePicture();
-                                        }
-                                    }
-                                }
-                            }
-                            else if(firebaseVisionFaces.size() > 1){
-                                txtDetected.setText("Wajah lebih dari 1");
-                                STATE_NOW = 0;
-                            }
-                            else{
-                                txtDetected.setText("Wajah tidak terdeteksi");
-                                STATE_NOW = 0;
-                            }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            txtDetected.setText("Face not Detected");
-                            Log.w(TAG,e.getMessage());
-                        }
-                    }));
-        }catch (Exception e){
-            Log.w(TAG, e.getMessage());
-        }
-
-    }
+//    @Override
+//    public void process(@NonNull Frame frame) {
+//        int height = frame.getSize().getHeight();
+//        int width = frame.getSize().getWidth();
+//
+//        FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
+//                .setHeight(height)
+//                .setWidth(width)
+//                .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_YV12)
+//                .setRotation((cameraView.getFacing() == Facing.FRONT) ? FirebaseVisionImageMetadata.ROTATION_270 : FirebaseVisionImageMetadata.ROTATION_90)
+//                .build();
+//        byte[] frameData = frame.getData();
+//        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromByteArray(frameData, metadata);
+//        FirebaseVisionFaceDetectorOptions options = new FirebaseVisionFaceDetectorOptions.Builder()
+//                .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+//                .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+//                .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+//                .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+//                .build();
+//
+//        FirebaseVisionFaceDetector faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(options);
+//        try {
+//            Tasks.await(faceDetector.detectInImage(firebaseVisionImage)
+//                    .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>() {
+//                        @Override
+//                        public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
+//                            if(firebaseVisionFaces.size() == 1){
+//                                txtDetected.setText("Wajah terdeteksi");
+//                                for (FirebaseVisionFace face : firebaseVisionFaces){
+//                                    Log.w(TAG, "left : " + face.getLeftEyeOpenProbability() + " right : " + face.getRightEyeOpenProbability());
+//                                    if(face.getLeftEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
+//                                            face.getRightEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
+//                                            face.getLeftEyeOpenProbability() <= LEFT_EYE_CLOSE_PROB &&
+//                                            face.getRightEyeOpenProbability() <= RIGHT_EYE_CLOSE_PROB &&
+//                                            face.getSmilingProbability() > SMILING_PROB){
+//
+//                                        Log.w(TAG, "TUTUP");
+//                                        if(STATE_NOW == 0){
+//                                            STATE_NOW = STATE_BLINK_PERTAMA;
+//                                        }
+//                                    }
+//                                    else if(face.getLeftEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
+//                                            face.getRightEyeOpenProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY &&
+//                                            face.getSmilingProbability() > SMILING_PROB){
+//                                        Log.w(TAG, "Buka");
+//                                        if(STATE_NOW == STATE_BLINK_PERTAMA){
+//                                            STATE_NOW = STATE_BLINK_KEDUA;
+//                                            Thread thread = new Thread();
+//                                            try{
+//                                                thread.sleep(100);
+//                                            }catch (Exception e){
+//                                                Log.w(TAG, e.getMessage());
+//                                            }
+//                                            cameraView.takePicture();
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                            else if(firebaseVisionFaces.size() > 1){
+//                                txtDetected.setText("Wajah lebih dari 1");
+//                                STATE_NOW = 0;
+//                            }
+//                            else{
+//                                txtDetected.setText("Wajah tidak terdeteksi");
+//                                STATE_NOW = 0;
+//                            }
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            txtDetected.setText("Face not Detected");
+//                            Log.w(TAG,e.getMessage());
+//                        }
+//                    }));
+//        }catch (Exception e){
+//            Log.w(TAG, e.getMessage());
+//        }
+//
+//    }
 
     class CamListener extends CameraListener{
+
         @Override
         public void onPictureTaken(@NonNull PictureResult result) {
             super.onPictureTaken(result);
+            final SweetAlertDialog pDialog = new SweetAlertDialog(NewPredictActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
             result.toBitmap(96, 96, new BitmapCallback() {
+                @SuppressLint("WrongThread")
                 @Override
                 public void onBitmapReady(@Nullable Bitmap bitmap) {
-                    send(bitmap);
+                    File file = new File(getApplicationContext().getCacheDir(), "ttd");
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+                    byte[] bitmap_data = byteArrayOutputStream.toByteArray();
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        fos.write(bitmap_data);
+                        fos.flush();
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
+
+                    tokenManager = TokenManager.getInstance(getSharedPreferences("prefs",MODE_PRIVATE));
+                    ApiClientAttendance api = ServerAttendance.createServiceWithAuth(ApiClientAttendance.class,tokenManager);
+                    Call<ResponseApi> call = api.predictface(body,id);
+                    call.enqueue(new Callback<ResponseApi>() {
+                        @Override
+                        public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
+                            if(response.isSuccessful()){
+                                //intent berhasil
+                        pDialog.dismiss();
+                                new SweetAlertDialog(NewPredictActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Hasil")
+                                        .setContentText(response.body().getMsg())
+                                        .setConfirmText("OK")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+                                                sDialog.dismissWithAnimation();
+                                                Intent intent = new Intent(NewPredictActivity.this, MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                startActivity(intent);
+                                            }
+                                        }).show();
+
+                                Log.w("lalalayeye",response.body().getMsg());
+
+                                if(response.body().getMsg() != null && response.body().getMsg().equals("Upload Wajah Selesai, Data Tersimpan")){
+                                    Intent intent = new Intent(NewPredictActivity.this, TrainActivity.class);
+                                    startActivity(intent);
+                                }
+//                                        Intent intent = new Intent(NewUploadActivity.this, TrainActivity.class);
+//                                        intent.putExtra("id",id);
+//                                        startActivity(intent);
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseApi> call, Throwable t) {
+
+                        }
+                    });
                 }
             });
+
+
+
+
+
+
         }
     }
 

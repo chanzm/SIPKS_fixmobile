@@ -124,6 +124,12 @@ public class NewUploadActivity extends AppCompatActivity {
         public void onPictureTaken(@NonNull PictureResult result) {
             super.onPictureTaken(result);
 
+            final SweetAlertDialog pDialog = new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
             result.toBitmap(96, 96, new BitmapCallback() {
                 @Override
                 public void onBitmapReady(@Nullable Bitmap bitmap) {
@@ -162,7 +168,7 @@ public class NewUploadActivity extends AppCompatActivity {
                         public void onResponse(Call<ResponseApi> call, Response<ResponseApi> response) {
                             if(response.isSuccessful()){
                                 //intent berhasil
-//                        pDialog.dismiss();
+                        pDialog.dismiss();
                         new SweetAlertDialog(NewUploadActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                 .setTitleText("Hasil")
                                 .setContentText(response.body().getMsg())

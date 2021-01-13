@@ -42,6 +42,7 @@
     <string name="status">Status</string>
     <string name="Capture">Capture</string>
     <string name="fitur_train">Fitur ini digunakan untuk mengenali tanda tangan oleh komputer setelah mengirim tanda tangan.</string>
+    <string name="fitur_train1">Fitur ini digunakan untuk mengenali wajah oleh komputer setelah mengirim foto wajah.</string>
     <string name="hint_upload">1. Kedipkan mata untuk mengambil gambar dan mengupload foto.\n2. Upload Foto minimal 10 kali dengan wajah memenuhi kamera.</string>
     <string name="Train">Train</string>
     <string name="Transfer">Transfer</string>

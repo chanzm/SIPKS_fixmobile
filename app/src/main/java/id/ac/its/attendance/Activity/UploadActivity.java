@@ -66,7 +66,7 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         okcam = findViewById(R.id.okcam);
-        btnAmbilKamera = (Button) findViewById(R.id.tangkap_wajah);
+        btnAmbilKamera = (Button) findViewById(R.id.okcam);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Upload Foto");
